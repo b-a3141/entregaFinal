@@ -55,7 +55,7 @@
 
 
  -->
-		<c:if test="${user.isAdmin()}">
+	<%-- 	<c:if test="${user.isAdmin()}">
 			<div class="mb-3">
 				<a href="/final1/attractions/create.do" class="btn btn-primary"
 					role="button"> <i class="bi bi-plus-lg"></i> Nueva Atracción
@@ -108,31 +108,100 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-		</table>
+		</table> --%>
 
 	<div class="container py-3"  >
 	
+	
+	
+	 <c:if test="${user.isAdmin()}">
+			<div class="mb-3">
+				<a href="/final1/attractions/create.do" class="btn btn-primary"
+					role="button"> <i class="bi bi-plus-lg"></i> Nueva Atracción
+				</a>
+			</div>
+		</c:if>
+		
 	<c:forEach items="${attractions}" var="attraction">
+
+
+
+	<div class="card" style="width: 100%;">
+  <img src="${attraction.imagen} " class="card-img-top" alt="imagen_atraccion">
+  <div class="card-body">
+    <h5 class="card-title"><c:out value="${attraction.name}"></c:out></h5>
+    <p class="card-text"><c:out value="${attraction.descripcion}"></c:out></p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Valor <c:out value="${attraction.cost}"></c:out></li>
+    <li class="list-group-item">Tiempo requerido <c:out value="${attraction.duration}"> hs.</c:out></li>
+  </ul>
+  <div class="card-body">
+					<c:choose>
+
+						<c:when
+							test="${user.canAfford(attraction) && user.canAttend(attraction) && attraction.canHost(1)}">
+							<a href="/final1/attractions/buy.do?id=${attraction.id}"
+								class="btn btn-success rounded" role="button">Comprar</a>
+						</c:when>
+						<c:otherwise>
+							<a href="#" class="btn btn-secondary rounded disabled"
+								role="button">No se puede comprar</a>
+						</c:otherwise>
+					</c:choose>
+
+					<a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+
+
+
+
+
+
+
 
 		<div class="row py-3">
 		 
-	     <div class="col" >
-			<a href="#" class="list-group-item" style ="list-group-color: gray-900;"
-				aria-current="true">
-				<div class="d-flex w-80 justify-content-between">
-				
-				
-					<h5 class="mb-1"><strong><c:out value="${attraction.name}"></c:out></strong></h5>
-					<small>Valor <c:out value="${attraction.cost}"></c:out></small> 
-					<small>Tiempo requerido <c:out value="${attraction.duration}"> hs.</c:out></small>
-				</div>
-				<p class="mb-1"><c:out value="${attraction.descripcion}"></c:out></p> 
-				<small>Contamos con más de 30 variedades de platos</small> 
-				
-			</a>
-		</div>
+	   
 			   
 			 <div class="col" >
+			 
+			
+		<table class="table table-stripped table-hover">
+		
+			<tbody>
+			
+					<tr>
+						
+						<td><c:if test="${user.admin}">
+								<a href="/final1/attractions/edit.do?id=${attraction.id}"
+									class="btn btn-light rounded-0" role="button"><i
+									class="bi bi-pencil-fill"></i></a>
+								<a href="/turismo/attractions/delete.do?id=${attraction.id}"
+									class="btn btn-danger rounded" role="button"><i
+									class="bi bi-x-circle-fill"></i></a>
+							</c:if> <c:choose>
+
+								<c:when
+									test="${user.canAfford(attraction) && user.canAttend(attraction) && attraction.canHost(1)}">
+									<a href="/final1/attractions/buy.do?id=${attraction.id}"
+										class="btn btn-success rounded" role="button">Comprar</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#" class="btn btn-secondary rounded disabled"
+										role="button">No se puede comprar</a>
+								</c:otherwise>
+							</c:choose></td>
+					</tr>
+					
+				
+			
+			</tbody>
+		</table>
+			 
+			 
 			   <a class="btn btn-secondary" href="principalAdmin.html">Ver más</a> 
 			   <a class="btn btn-success" href="logout.html">Comprar</a>
 			 </div>
@@ -142,7 +211,7 @@
 		
 	</div>
   
-		</c:forEach>
+			</c:forEach>
 
 
 	</main>
