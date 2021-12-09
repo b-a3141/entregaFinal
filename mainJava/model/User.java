@@ -1,16 +1,23 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import persistence.AttractionDAO;
+import persistence.commons.DAOFactory;
 import utils.Crypt;
 
 public class User {
 
 	private Integer id;
-	private String username, passwordHash;
+	private String username, passwordHash,typeAttractions;
 	private Boolean admin;
 	private Integer coins;
 	private Double time;
+	List<Integer> attractionsOwned = new ArrayList<Integer>();
+	List<Integer> promotionsOwned = new ArrayList<Integer>();
 
-	public User(Integer id, String username, String password, Integer coins, Double time, Boolean admin) {
+	public User(Integer id, String username, String password, Integer coins, Double time, Boolean admin,String typeAttractions) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -18,20 +25,38 @@ public class User {
 		this.coins = coins;
 		this.time = time;
 		this.admin = admin;
+		this.typeAttractions = typeAttractions;
 	}
+	
 
 	public void addToItinerary(Attraction attraction) {
+		System.out.println(coins);
+		System.out.println(attraction.getCost());
 		this.coins -= attraction.getCost();
+		
 		this.time -= attraction.getDuration();
-		// TODO agregar a su lista
+		attractionsOwned.add(attraction.getId());
+	}
+	public void addToItinerary(promotion promotion) {
+		promotionsOwned.add(promotion.getId());
+		attractionsOwned.addAll(promotion.getAttractionContained());
+		this.coins-=promotion.getCost();
+		this.time -=promotion.getDuration();
 	}
 
 	public boolean canAfford(Attraction attraction) {
 		return attraction.getCost() <= this.coins;
 	}
+	public boolean canAfford(promotion promotion) {
+		return true;
+		//return promotion.getCost() <= this.coins;
+	}
 
 	public boolean canAttend(Attraction attraction) {
 		return attraction.getDuration() <= this.time;
+	}
+	public boolean canAttend(promotion promotion) {
+		return promotion.getDuration() <= this.time;
 	}
 
 	public boolean checkPassword(String password) {
@@ -94,10 +119,54 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	public String getTypeAttractions() {
+		return typeAttractions;
+	}
+
+
+	public void setTypeAttractions(String typeAttractions) {
+		this.typeAttractions = typeAttractions;
+	}
+
+
+	public List<Integer> getAttractionsOwned() {
+		return attractionsOwned;
+	}
+
+	public void setAttractionsOwned(List<Integer> attractionsOwned) {
+		this.attractionsOwned = attractionsOwned;
+	}
+	public void addAllAttractionsOwned(List<Integer> attractionsOwned) {
+		this.attractionsOwned.addAll(attractionsOwned);
+	}
+	public void addAttractionsOwned(Integer attractionsOwned) {
+		this.attractionsOwned.add(attractionsOwned);
+	}
+
+	public List<Integer> getPromotionsOwned() {
+		return promotionsOwned;
+	}
+
+	public void setPromotionsOwned(List<Integer> promotionsOwned) {
+		this.promotionsOwned = promotionsOwned;
+	}
+	public void addPromotionsOwned(Integer promotionsOwned) {
+		this.promotionsOwned.add(promotionsOwned);
+	}
+	public void addAllPromotionsOwned(List<Integer> promotionsOwned) {
+		this.promotionsOwned.addAll(promotionsOwned);
+	}
+
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + passwordHash + ", admin=" + admin + "]";
+		return "User [id=" + id + ", username=" + username + ", passwordHash=" + passwordHash + ", typeAttractions="
+				+ typeAttractions + ", admin=" + admin + ", coins=" + coins + ", time=" + time + ", attractionsOwned="
+				+ attractionsOwned + ", promotionsOwned=" + promotionsOwned + "]";
 	}
+
+	
+	
 
 }

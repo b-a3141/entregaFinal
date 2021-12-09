@@ -34,5 +34,7 @@ public class ListAttractionsServlet extends HttpServlet implements Servlet {
 		dispatcher.forward(req, resp);
 
 	}
-
+	
+	
+	
 }

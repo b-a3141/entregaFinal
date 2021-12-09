@@ -10,6 +10,7 @@ import java.util.List;
 import model.Attraction;
 import persistence.AttractionDAO;
 import persistence.commons.ConnectionProvider;
+import persistence.commons.DAOFactory;
 import persistence.commons.MissingDataException;
 
 public class AttractionDAOImpl implements AttractionDAO {
@@ -87,8 +88,8 @@ public class AttractionDAOImpl implements AttractionDAO {
 	@Override
 	public int update(Attraction attraction) {
 		try {
-			String sql = "UPDATE ATTRACTIONS SET NAME = ?, COST = ?, DURATION = ?, CAPACITY = ? "
-					+ " descripcion = ?, iamgen = ? WHERE ID = ?";
+			String sql = "UPDATE ATTRACTIONS SET NAME = ?, COST = ?, DURATION = ?, CAPACITY = ?, "
+					+ " descripcion = ?, imagen = ? WHERE ID = ?";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -142,6 +143,8 @@ public class AttractionDAOImpl implements AttractionDAO {
 		}
 	}
 
-
+	public static void main(String[] args) {
+		System.out.println(DAOFactory.getAttractionDAO().findAll());
+	}
 
 }

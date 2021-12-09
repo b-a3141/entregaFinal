@@ -58,9 +58,8 @@
  <c:forEach items="${attractions}" var="attraction">
 
 
-
 	<div class="card" style="width: 100%;">
-	  <img src="${attraction.imagen} " class="card-img-top" alt="imagen_atraccion">
+	  <img src="${attraction.getImagen()} " class="card-img-top" alt="imagen_atraccion">
 	  <div class="card-body">
 	    <h5 class="card-title"><c:out value="${attraction.name}"></c:out></h5>
 	    <p class="card-text"><c:out value="${attraction.descripcion}"></c:out></p>

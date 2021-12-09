@@ -105,7 +105,11 @@ public class Attraction {
 	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
-
+	
+	public void reduceCapacity() {
+		this.capacity--;
+	}
+	
 	@Override
 	public String toString() {
 		return "Attraction [id=" + id + ", name=" + name + ", cost=" + cost + ", duration=" + duration + ", capacity="

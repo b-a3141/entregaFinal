@@ -1,0 +1,67 @@
+<a href="https://ibb.co/YtF9Kbq"><img src="https://i.ibb.co/FBLvfnj/AXB.jpg" alt="AXB" border="0"></a>
+<a href="https://ibb.co/fGJNSFF"><img src="https://i.ibb.co/0V59X22/ABSOLUTA.jpg" alt="ABSOLUTA" border="0"></a>
+<a href="https://ibb.co/YdmG2wL"><img src="https://i.ibb.co/2MxBqHk/PORCENTUAL.jpg" alt="PORCENTUAL" border="0"></a>
+
+AXB
+https://i.ibb.co/FBLvfnj/AXB.jpg
+
+ABSOLUTA
+https://i.ibb.co/0V59X22/ABSOLUTA.jpg
+
+PORCENTUAL
+https://i.ibb.co/2MxBqHk/PORCENTUAL.jpg
+
+<c:choose>
+
+			 <c:when test="${user.canAfford(promotion) && user.canAttend(promotion) && promotion.canHost(1)}">
+				<a href="/final1/promotions/buy.do?id=${promotion.id}"
+						class="btn btn-success rounded" role="button">Comprar</a>
+			</c:when>*/
+			<c:otherwise>
+			<a href="#" class="btn btn-secondary rounded disabled" role="button">No se puede comprar</a>
+			</c:otherwise>
+			
+		</c:choose> 
+
+
+INSERT INTO promotions(name,type,descripcion,imagen,capacity,cost,discount,typeAttraction) VALUES
+('pruebaaventura','axb','descripcion','https://i.ibb.co/FBLvfnj/AXB.jpg','true',0,0,'aventura'),
+('prueba2aventura','absoluta','descripcion2','https://i.ibb.co/0V59X22/ABSOLUTA.jpg','true',200,0,'aventura'),
+('prueba3aventura','porcentual','descripcion3','https://i.ibb.co/2MxBqHk/PORCENTUAL.jpg','true',0,30,'aventura'),
+('pruebadegustacion','axb','descripcion','https://i.ibb.co/FBLvfnj/AXB.jpg','true',0,0,'degustacion'),
+('prueba2degustacion','absoluta','descripcion2','https://i.ibb.co/0V59X22/ABSOLUTA.jpg','true',210,0,'degustacion'),
+('prueba3degustacion','porcentual','descripcion3','https://i.ibb.co/2MxBqHk/PORCENTUAL.jpg','true',0,40,'degustacion'),
+('pruebapaisaje','axb','descripcion','https://i.ibb.co/FBLvfnj/AXB.jpg','true',0,0,'paisaje'),
+('pruebapaisaje2','absoluta','descripcion2','https://i.ibb.co/0V59X22/ABSOLUTA.jpg','true',220,0,'paisaje'),
+('pruebapaisaje3','porcentual','descripcion3','https://i.ibb.co/2MxBqHk/PORCENTUAL.jpg','true',0,10,'paisaje')
+
+INSERT INTO attractionInPromotion (promotionId,attractionId) VALUES
+(1,1),
+(2,16),
+(2,21),
+(3,7),
+(3,18),
+(4,17),
+(4,19),
+(5,1),
+(5,20),
+(5,4),
+(6,17),
+(6,1),
+(6,4),
+(7,3),
+(7,16),
+(8,21),
+(8,22),
+(8,3),
+(9,6),
+(9,22),
+(9,16),
+(10,18),
+(10,8),
+(11,2),
+(11,5),
+(11,7),
+(12,8),
+(12,18),
+(12,5)

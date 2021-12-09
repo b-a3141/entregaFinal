@@ -36,6 +36,7 @@ public class EditAttractionServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		Integer id = Integer.parseInt(req.getParameter("id"));
 		String name = req.getParameter("name");
 		Integer cost = Integer.parseInt(req.getParameter("cost"));
