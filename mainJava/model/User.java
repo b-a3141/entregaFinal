@@ -36,6 +36,7 @@ public class User {
 		
 		this.time -= attraction.getDuration();
 		attractionsOwned.add(attraction.getId());
+		System.out.println(coins);
 	}
 	public void addToItinerary(promotion promotion) {
 		promotionsOwned.add(promotion.getId());

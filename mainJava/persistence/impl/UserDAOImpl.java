@@ -48,9 +48,14 @@ public class UserDAOImpl implements UserDAO {
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setInt(1, user.getCoins());
-			statement.setDouble(2, user.getTime());
-			statement.setDouble(3, user.getId());
+			System.out.println(user.getCoins());
+			int i = 1;
+			System.out.println(user.getUsername());
+			statement.setString(i++, user.getUsername());
+			statement.setInt(i++, user.getCoins());
+			statement.setDouble(i++, user.getTime());
+			statement.setDouble(i++, user.getId());
+			
 			int rows = statement.executeUpdate();
 			updateBuys(user);
 			return rows;
