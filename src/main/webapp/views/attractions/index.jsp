@@ -72,7 +72,7 @@
 	  <div class="card-body">
 		<c:choose>
 
-			 <c:when test="${user.canAfford(attraction) && user.canAttend(attraction) && attraction.canHost(1)}">
+			 <c:when test="${user.canAfford(attraction) && user.canAttend(attraction) && attraction.canHost(1) && user.attractionNotBuyed(attraction.id)}">
 				<a href="/final1/attractions/buy.do?id=${attraction.id}"
 						class="btn btn-success rounded" role="button">Comprar</a>
 			</c:when>

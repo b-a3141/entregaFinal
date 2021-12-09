@@ -68,7 +68,7 @@
 	    <li class="list-group-item">Valor <c:out value="${promotion.cost}"></c:out></li>
 	    <li class="list-group-item">Tiempo requerido <c:out value="${promotion.duration}"> hs.</c:out></li>
 	  </ul>
-	 
+
 	  <div class="card-body">
 	  
 	 
@@ -90,7 +90,7 @@
 		</c:if>
       </div>
     </div>
-
+   
  </c:forEach>
 	
 </div>

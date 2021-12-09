@@ -41,9 +41,10 @@ public class BuyAttractionServlet extends HttpServlet {
 			req.setAttribute("errors", errors);
 			req.setAttribute("flash", "No ha podido realizarse la compra");
 		}
-
+		resp.sendRedirect("/final1/index.jsp");
+		/*
 		RequestDispatcher dispatcher = getServletContext()
-				.getRequestDispatcher("/attractions/index.do");
-		dispatcher.forward(req, resp);
+				.getRequestDispatcher("/index.do");
+		dispatcher.forward(req, resp); */
 	}
 }

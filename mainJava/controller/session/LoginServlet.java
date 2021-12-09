@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
        	} else {
     		req.setAttribute("flash", "Nombre de usuario o contraseña incorrectos");
     		
+    		
     		RequestDispatcher dispatcher = getServletContext()
       		      .getRequestDispatcher("/login.jsp");
       		    dispatcher.forward(req, resp);

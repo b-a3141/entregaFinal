@@ -65,6 +65,12 @@ public class User {
 		return Crypt.match(password, this.passwordHash);
 	}
 
+	
+	public boolean attractionNotBuyed(int id) {
+		return !attractionsOwned.contains(id);
+		
+	}
+	
 	public Boolean getAdmin() {
 		return admin;
 	}
@@ -158,7 +164,7 @@ public class User {
 	public void addAllPromotionsOwned(List<Integer> promotionsOwned) {
 		this.promotionsOwned.addAll(promotionsOwned);
 	}
-
+	
 
 	@Override
 	public String toString() {
