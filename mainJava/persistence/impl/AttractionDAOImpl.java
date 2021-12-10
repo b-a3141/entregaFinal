@@ -57,14 +57,15 @@ public class AttractionDAOImpl implements AttractionDAO {
 	private Attraction toAttraction(ResultSet attractionRegister) throws SQLException {
 		return new Attraction(attractionRegister.getInt(1), attractionRegister.getString(2),
 				attractionRegister.getInt(3), attractionRegister.getDouble(4), attractionRegister.getInt(5)
-				, attractionRegister.getString(6), attractionRegister.getString(7));
+				, attractionRegister.getString(6), attractionRegister.getString(7),attractionRegister.getString(9));
 	}
 
 	@Override
 	public int insert(Attraction attraction) {
 		try {
-			String sql = "INSERT INTO ATTRACTIONS (NAME, COST, DURATION, CAPACITY, descripcion, imagen)"
-					+ " VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO ATTRACTIONS (NAME, COST, DURATION, CAPACITY, descripcion, imagen,"
+					+ "capacity_original, type)"
+					+ " VALUES (?, ?, ?, ?, ?, ?,?,?)";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -75,6 +76,8 @@ public class AttractionDAOImpl implements AttractionDAO {
 			statement.setInt(i++, attraction.getCapacity());
 			statement.setString(i++, attraction.getDescripcion());
 			statement.setString(i++, attraction.getImagen());
+			statement.setInt(i++, attraction.getCapacity());
+			statement.setString(i++, attraction.getType());
 			
 			
 			int rows = statement.executeUpdate();

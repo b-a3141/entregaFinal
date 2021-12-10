@@ -49,11 +49,11 @@ public class EditAttractionServlet extends HttpServlet {
 		Attraction attraction = attractionService.update(id, name, cost, duration, capacity, descripcion, imagen);
 
 		if (attraction.isValid()) {
-			resp.sendRedirect("/turismo/attractions/index.do");
+			resp.sendRedirect("/final1/attractions/index.do");
 		} else {
 			req.setAttribute("attraction", attraction);
 
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/attractions/edit.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/final1/views/attractions/edit.jsp");
 			dispatcher.forward(req, resp);
 		}
 	}

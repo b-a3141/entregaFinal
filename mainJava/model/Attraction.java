@@ -12,11 +12,12 @@ public class Attraction {
 	private Integer capacity;
 	private String descripcion;
 	private String imagen;
+	private String type;
 	
 	private Map<String, String> errors;
 	
 	public Attraction(Integer id, String name, Integer cost, Double duration, Integer capacity,
-			String descripcion, String imagen) {
+			String descripcion, String imagen, String type) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,6 +26,7 @@ public class Attraction {
 		this.capacity = capacity;
 		this.descripcion = descripcion;
 		this.imagen= imagen;
+		this.type = type;
 	}
 	
 	public String getDescripcion() {
@@ -59,6 +61,15 @@ public class Attraction {
 		}
 		if (capacity <= 0) {
 			errors.put("capacity", "Debe ser positivo");
+		}
+		if (descripcion.length()<20) {
+			errors.put("descripcion", "Debe ser mayor a 20 caracteres");
+		}
+		if (imagen.equals("")) {
+			errors.put("imagen", "Debe proporcionar imagen");
+		}
+		if (type.equals("")) {
+			errors.put("type", "Debe proporcionar type");
 		}
 	}
 	
@@ -110,6 +121,20 @@ public class Attraction {
 		this.capacity--;
 	}
 	
+	
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	@Override
 	public String toString() {
 		return "Attraction [id=" + id + ", name=" + name + ", cost=" + cost + ", duration=" + duration + ", capacity="
