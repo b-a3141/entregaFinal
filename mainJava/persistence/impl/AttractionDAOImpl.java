@@ -4,10 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import model.Attraction;
+import model.User;
 import persistence.AttractionDAO;
 import persistence.commons.ConnectionProvider;
 import persistence.commons.DAOFactory;
@@ -17,7 +18,7 @@ public class AttractionDAOImpl implements AttractionDAO {
 
 	public List<Attraction> findAll() {
 		try {
-			String sql = "SELECT * FROM ATTRACTIONS";
+			String sql = "SELECT * FROM ATTRACTIONS ORDER BY cost DESC, duration";
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet resultados = statement.executeQuery();
@@ -143,8 +144,52 @@ public class AttractionDAOImpl implements AttractionDAO {
 		}
 	}
 
-	public static void main(String[] args) {
-		System.out.println(DAOFactory.getAttractionDAO().findAll());
+	
+
+	public ArrayList<Attraction> getAtraccionesPreferidas(User user) {
+		
+		ArrayList<Attraction> listaSeleccionadaAlUsuaio = new ArrayList<Attraction>();
+		
+		try {
+			String sql = "SELECT  "
+					+ " attractions.id, "
+					+ " attractions.name, "
+					+ " attractions.cost, "
+					+ " attractions.duration, "
+					+ " attractions.capacity, "
+					+ " attractions.descripcion, "
+					+ " attractions.imagen, "		
+					+ " attractions.type "
+					+ " FROM attractions  "
+					+ " JOIN users ON "
+					+ " users.typeAttractions = attractions.type  "
+					+ " AND users.id  = ? "
+					+ " ORDER BY cost DESC; ";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, user.getId());
+			System.out.println(user.getId());
+			ResultSet resultados = statement.executeQuery();
+			
+
+			while (resultados.next()) {
+				listaSeleccionadaAlUsuaio.add(toAttraction(resultados));
+			System.out.println(resultados);
+			}
+
+			return listaSeleccionadaAlUsuaio;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+		
+		
+	}
+
+	public ArrayList<Attraction> findByNotPreferenciasUsuario(User user) {
+		
+		ArrayList<Attraction> listaSinPreferencia = new ArrayList<Attraction>();
+		return listaSinPreferencia;
+		
 	}
 
 }
