@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import model.Attraction;
+import model.User;
 import persistence.AttractionDAO;
 import persistence.commons.DAOFactory;
 
@@ -59,4 +60,17 @@ public class AttractionService {
 		return attractionDAO.find(id);
 	}
 
+	public List<Attraction> getAtraccionesPreferidas(User user) {
+		
+		AttractionDAO attractionDAO = DAOFactory.getAttractionDAO();
+		List<Attraction> preferidas;
+		preferidas = attractionDAO.getAtraccionesPreferidas(user);
+		
+		
+		System.out.println(preferidas);
+		return preferidas;
+		
+	}
+
+	
 }

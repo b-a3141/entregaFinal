@@ -55,7 +55,7 @@
 			</div>
 		</c:if>
 		
- <c:forEach items="${attractions}" var="attraction">
+ <c:forEach items="${attractionsPreferidas}" var="attraction">
 
 
 	<div class="card" style="width: 100%;">
