@@ -20,8 +20,8 @@ public class promotion {
 	private int discount;
 	private List<Integer> attractionContained = new ArrayList<Integer>();
 
-	public promotion(int id, String name, String type, String description, String imagen, boolean capacity, int cost,
-			int discount) {
+	public promotion(int id, String name, String type, String description, String imagen,
+			boolean capacity, int cost, int discount) {
 		this.id = id;
 		this.name = name;
 		this.type = type;

@@ -14,9 +14,9 @@ public class PromotionService {
 	}
 	
 	//int id, String name, String type, String description, String imagen, boolean capacity, int cost,int discount
-	public promotion create(String name, String type, String description, String imagen,boolean capacity, int cost, int discount ) {
+	public promotion create(String name, String type, String description, String imagen, Boolean capacity, Integer cost, Integer discount ) {
 		
-		promotion promotion = new promotion(-1, name, type, description, imagen, capacity, discount, discount);
+		promotion promotion = new promotion(-1, name, type, description, imagen, capacity, cost , discount);
 		
 		if(promotion.isValid()) {
 			PromotionDAO pd = DAOFactory.getPromotionDAO();
