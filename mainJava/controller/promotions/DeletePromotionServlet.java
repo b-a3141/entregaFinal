@@ -9,56 +9,39 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import model.promotion;
+import persistence.PromotionDAO;
+import persistence.commons.DAOFactory;
 
 /**
  * Servlet implementation class DeletePromotionServlet
  */
-@WebServlet("/DeletePromotionServlet")
+@WebServlet("/promotions/delete.do")
 public class DeletePromotionServlet extends HttpServlet implements Servlet {
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DeletePromotionServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5013410775608608111L;
+    PromotionDAO promotionDAO;
+    
+    @Override
+    public void init() throws ServletException {
+    	super.init();
+    	promotionDAO = DAOFactory.getPromotionDAO();
     }
-
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
-	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @see Servlet#destroy()
-	 */
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @see Servlet#getServletConfig()
-	 */
-	public ServletConfig getServletConfig() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * @see Servlet#getServletInfo()
-	 */
-	public String getServletInfo() {
-		// TODO Auto-generated method stub
-		return null; 
-	}
-
-	/**
-	 * @see Servlet#service(ServletRequest request, ServletResponse response)
-	 */
-	public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
+	
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	Integer id = Integer.parseInt(req.getParameter("id"));
+    	promotion promotion = promotionDAO.find(id);
+    	promotionDAO.delete(promotion);
+    	
+    	req.getRequestDispatcher("index.jsp").forward(req, resp);
+    	
+    	
+    }
+    
 }

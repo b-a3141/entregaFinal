@@ -2,63 +2,63 @@ package controller.promotions;
 
 import java.io.IOException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.Servlet;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import model.promotion;
+import services.PromotionService;
 
 /**
  * Servlet implementation class CreatePromotionServlet
  */
-@WebServlet("/CreatePromotionServlet")
+@WebServlet("/promotions/create.do")
 public class CreatePromotionServlet extends HttpServlet implements Servlet {
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CreatePromotionServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+ 
+	PromotionService promotionService;
+	
+	private static final long serialVersionUID = -7089260286336265668L;
 
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
-	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		this.promotionService = new PromotionService();
 	}
 
-	/**
-	 * @see Servlet#destroy()
-	 */
-	public void destroy() {
-		// TODO Auto-generated method stub
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/promotions/create.jsp");
+		dispatcher.forward(req, resp);
 	}
 
-	/**
-	 * @see Servlet#getServletConfig()
-	 */
-	public ServletConfig getServletConfig() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		String s = req.getParameter("selector");
+		System.out.println(s);
+		
+		/*
+		String name = req.getParameter("name");
+		String type = req.getParameter("type");
+		String descripcion = req.getParameter("descripcion");
+		String imagen = req.getParameter("imagen");
+		Integer cost = Integer.parseInt(req.getParameter("cost"));
+		int discount = (int) Double.parseDouble(req.getParameter("discount"));
 
-	/**
-	 * @see Servlet#getServletInfo()
-	 */
-	public String getServletInfo() {
-		// TODO Auto-generated method stub
-		return null; 
-	}
+		promotion promotion = promotionService.create(name, type, descripcion, imagen, false, cost, discount);
+		 /*
+		if (promotion.isValid()) {
+			resp.sendRedirect("/final1/promotions/index.do");
+		} else { */
+			/*req.setAttribute("promotion", promotion);*/
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/promotions/create.jsp");
+			dispatcher.forward(req, resp);
+		
 
-	/**
-	 * @see Servlet#service(ServletRequest request, ServletResponse response)
-	 */
-	public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

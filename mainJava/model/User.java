@@ -39,6 +39,7 @@ public class User {
 		System.out.println(coins);
 	}
 	public void addToItinerary(promotion promotion) {
+		System.out.println("promotion id= " + promotion.getId());
 		promotionsOwned.add(promotion.getId());
 		attractionsOwned.addAll(promotion.getAttractionContained());
 		this.coins-=promotion.getCost();
@@ -49,8 +50,7 @@ public class User {
 		return attraction.getCost() <= this.coins;
 	}
 	public boolean canAfford(promotion promotion) {
-		return true;
-		//return promotion.getCost() <= this.coins;
+		return promotion.getDuration() <= this.time;
 	}
 
 	public boolean canAttend(Attraction attraction) {
@@ -70,6 +70,12 @@ public class User {
 		return !attractionsOwned.contains(id);
 		
 	}
+	
+	public boolean promotionNotBuyed(int id) {
+		return !promotionsOwned.contains(id);
+		
+	}
+	
 	
 	public Boolean getAdmin() {
 		return admin;

@@ -39,7 +39,7 @@
 	 <c:if test="${user.isAdmin()}">
 			<div class="mb-3">
 				<a href="/final1/promotions/create.do" class="btn btn-primary"
-					role="button"> <i class="bi bi-plus-lg"></i> Nueva Atracción
+					role="button"> <i class="bi bi-plus-lg"></i> Nueva Promoción
 				</a>
 			</div>
 		</c:if>
@@ -62,7 +62,7 @@
 	  
 	 
 			<c:choose>
-			 <c:when test="${user.canAfford(promotion) && user.canAttend(promotion) && promotion.capacity}">
+			 <c:when test="${user.canAfford(promotion) && user.canAttend(promotion) && promotion.capacity && user.promotionNotBuyed(promotion.id)}">
 				<a href="/final1/promotions/buy.do?id=${promotion.id}"
 						class="btn btn-success rounded" role="button">Comprar</a>
 			</c:when>
@@ -74,7 +74,7 @@
 		<c:if test="${user.admin}">
 			<a href="/final1/promotions/edit.do?id=${promotion.id}"
 			class="btn btn-light rounded-0" role="button"><i class="bi bi-pencil-fill"></i></a>
-			<a href="/turismo/promotions/delete.do?id=${promotion.id}"
+			<a href="/final1/promotions/delete.do?id=${promotion.id}"
 			class="btn btn-danger rounded" role="button"><i class="bi bi-x-circle-fill"></i></a>
 		</c:if>
       </div>

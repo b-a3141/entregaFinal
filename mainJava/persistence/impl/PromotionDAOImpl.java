@@ -185,7 +185,6 @@ public class PromotionDAOImpl implements PromotionDAO {
 			ResultSet resultados = statement.executeQuery();
 
 			while(resultados.next()) {
-				System.out.println(resultados.getInt(2));
 				attractionList.add(resultados.getInt(2));
 			}
 
@@ -197,6 +196,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 		}
 	}
 
+	
 	public static void main(String[] args) {
 		PromotionDAO pr = new PromotionDAOImpl();
 		

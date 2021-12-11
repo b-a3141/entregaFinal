@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
 	<div class="container">
-		<a class="navbar-brand" href="/turismo/index.jsp">Turismo en la Tierra Media</a>
+		<a class="navbar-brand" href="/final1/index.jsp">Turismo en la Tierra Media</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@
 							<i title="tiempo" style="color: blue;" class="bi bi-clock-fill"></i> <c:out value="${user.time}h"></c:out>
 						</a></li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a href="/turismo/logout" class="dropdown-item">Salir</a></li>
+						<li><a href="/final1/logout" class="dropdown-item">Salir</a></li>
 					</ul>
 				</li>
 			</ul>

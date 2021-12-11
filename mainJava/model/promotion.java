@@ -33,12 +33,12 @@ public class promotion {
 	}
 	
 	public boolean isValid() {
-		boolean esvalido = true;
+		boolean isValid = true;
 		
-		if(getCost()<0) esvalido=false;
-		if(getDiscount()<0) esvalido=false;
+		if(getCost()<0) isValid = false;
+		if(getDiscount()<0) isValid = false;
 		
-		return esvalido;
+		return isValid;
 		
 	}
 
@@ -83,6 +83,7 @@ public class promotion {
 	}
 
 	public boolean getCapacity() {
+		
 		return capacity;
 	}
 
@@ -118,13 +119,8 @@ public class promotion {
 
 	public boolean hasCapacity() {
 		boolean hascapacity = true;
-
-		for (int i = 0; i < this.attractionContained.size(); i++) {
-			AttractionDAO ad = DAOFactory.getAttractionDAO();
-			if (ad.find(attractionContained.get(i)).getCapacity() <= 0) {
-				hascapacity = false;
-			}
-		}
+		
+		System.out.println(attractionContained);
 		return hascapacity;
 	}
 	
