@@ -27,25 +27,20 @@ public class ListAttractionsServlet extends HttpServlet implements Servlet {
 		super.init();
 		this.attractionService = new AttractionService();
 		loginService = new LoginService();
-
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Attraction> attractions = attractionService.list();
-		req.setAttribute("attractions", attractions);
-		//Pedir el  usuario logueado para pasarlo al método
 		
-		User user = (User) req.getSession().getAttribute("user");
-		
+	//	String username = req.getParameter("username");
+    //	String password = req.getParameter("password");
     	
-    	
-		System.out.println(user);
-		List<Attraction> attractionsPreferidas = attractionService.getAtraccionesPreferidas(user);
+    	//User user = loginService.login(username, password);
+		User user =(User) req.getSession().getAttribute("user");
 		
-		System.out.println(attractionsPreferidas);
+		List<Attraction> attractionsPreferidas = attractionService.getPreferidas(user);
 		req.setAttribute("attractionsPreferidas", attractionsPreferidas);
-		
+
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/attractions/index.jsp");
 		dispatcher.forward(req, resp);
 

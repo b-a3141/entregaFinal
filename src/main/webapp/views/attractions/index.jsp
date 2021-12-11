@@ -55,25 +55,25 @@
 			</div>
 		</c:if>
 		
- <c:forEach items="${attractionsPreferidas}" var="attraction">
+ <c:forEach items="${attractionsPreferidas}" var="attractionsPreferidas">
 
 
 	<div class="card" style="width: 100%;">
-	  <img src="${attraction.getImagen()} " class="card-img-top" alt="imagen_atraccion">
+	  <img src="${attractionsPreferidas.getImagen()} " class="card-img-top" alt="imagen_atraccion">
 	  <div class="card-body">
-	    <h5 class="card-title"><c:out value="${attraction.name}"></c:out></h5>
-	    <p class="card-text"><c:out value="${attraction.descripcion}"></c:out></p>
+	    <h5 class="card-title"><c:out value="${attractionsPreferidas.name}"></c:out></h5>
+	    <p class="card-text"><c:out value="${attractionsPreferidas.descripcion}"></c:out></p>
 	  </div>
 	  <ul class="list-group list-group-flush">
-	    <li class="list-group-item">Valor <c:out value="${attraction.cost}"></c:out></li>
-	    <li class="list-group-item">Tiempo requerido <c:out value="${attraction.duration}"> hs.</c:out></li>
+	    <li class="list-group-item">Valor <c:out value="${attractionsPreferidas.cost}"></c:out></li>
+	    <li class="list-group-item">Tiempo requerido <c:out value="${attractionsPreferidas.duration}"> hs.</c:out></li>
 	  </ul>
 	 
 	  <div class="card-body">
 		<c:choose>
 
-			 <c:when test="${user.canAfford(attraction) && user.canAttend(attraction) && attraction.canHost(1)}">
-				<a href="/final1/attractions/buy.do?id=${attraction.id}"
+			 <c:when test="${user.canAfford(attractionsPreferidas) && user.canAttend(attractionsPreferidas) && attractionsPreferidas.canHost(1)}">
+				<a href="/final1/attractions/buy.do?id=${attractionsPreferidas.id}"
 						class="btn btn-success rounded" role="button">Comprar</a>
 			</c:when>
 			<c:otherwise>
@@ -82,9 +82,9 @@
 			
 		</c:choose>
 		<c:if test="${user.admin}">
-			<a href="/final1/attractions/edit.do?id=${attraction.id}"
+			<a href="/final1/attractions/edit.do?id=${attractionsPreferidas.id}"
 			class="btn btn-light rounded-0" role="button"><i class="bi bi-pencil-fill"></i></a>
-			<a href="/turismo/attractions/delete.do?id=${attraction.id}"
+			<a href="/turismo/attractions/delete.do?id=${attractionsPreferidas.id}"
 			class="btn btn-danger rounded" role="button"><i class="bi bi-x-circle-fill"></i></a>
 		</c:if>
       </div>

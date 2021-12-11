@@ -13,6 +13,9 @@ public class AttractionService {
 		return DAOFactory.getAttractionDAO().findAll();
 	}
 
+	public List<Attraction> getPreferidas(User user) {
+		return DAOFactory.getAttractionDAO().findPreferidas(user);
+	}
 	public Attraction create(String name, Integer cost, Double duration, 
 			Integer capacity, String descripcion, String imagen) {
 
@@ -60,17 +63,4 @@ public class AttractionService {
 		return attractionDAO.find(id);
 	}
 
-	public List<Attraction> getAtraccionesPreferidas(User user) {
-		
-		AttractionDAO attractionDAO = DAOFactory.getAttractionDAO();
-		List<Attraction> preferidas;
-		preferidas = attractionDAO.getAtraccionesPreferidas(user);
-		
-		
-		System.out.println(preferidas);
-		return preferidas;
-		
-	}
-
-	
 }
