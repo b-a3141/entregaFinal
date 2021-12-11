@@ -44,6 +44,11 @@
 			</div>
 		</c:if>
 		
+		<div class="bg-light p-4 mb-3 rounded">
+			<h3>Lo que usted prefiere</h3>
+		</div>
+
+
  <c:forEach items="${attractionsPreferidas}" var="attractionsPreferidas">
 
 
@@ -80,6 +85,51 @@
     </div>
 
  </c:forEach>
+	
+		<div class="bg-light p-4 mb-3 rounded">
+			<h3>Si no ha encontrado algo de su gusto principal, le sugerimos lo siguiente:</h3>
+		</div>
+
+	
+		
+ <c:forEach items="${attractionsNotPreferidas}" var="attractionsNotPreferidas">
+
+
+	<div class="card" style="width: 100%;">
+	  <img src="${attractionsNotPreferidas.getImagen()} " class="card-img-top" alt="imagen_atraccion">
+	  <div class="card-body">
+	    <h5 class="card-title"><c:out value="${attractionsNotPreferidas.name}"></c:out></h5>
+	    <p class="card-text"><c:out value="${attractionsNotPreferidas.descripcion}"></c:out></p>
+	  </div>
+	  <ul class="list-group list-group-flush">
+	    <li class="list-group-item">Valor <c:out value="${attractionsNotPreferidas.cost}"></c:out></li>
+	    <li class="list-group-item">Tiempo requerido <c:out value="${attractionsNotPreferidas.duration}"> hs.</c:out></li>
+	  </ul>
+	 
+	  <div class="card-body">
+		<c:choose>
+
+			 <c:when test="${user.canAfford(attractionsNotPreferidas) && 
+			 user.canAttend(attractionsNotPreferidas) && attractionsNotPreferidas.canHost(1)}">
+				<a href="/final1/attractions/buy.do?id=${attractionsNotPreferidas.id}"
+						class="btn btn-success rounded" role="button">Comprar</a>
+			</c:when>
+			<c:otherwise>
+			<a href="#" class="btn btn-secondary rounded disabled" role="button">No se puede comprar</a>
+			</c:otherwise>
+			
+		</c:choose>
+		<c:if test="${user.admin}">
+			<a href="/final1/attractions/edit.do?id=${attractionsNotPreferidas.id}"
+			class="btn btn-light rounded-0" role="button"><i class="bi bi-pencil-fill"></i></a>
+			<a href="/turismo/attractions/delete.do?id=${attractionsNotPreferidas.id}"
+			class="btn btn-danger rounded" role="button"><i class="bi bi-x-circle-fill"></i></a>
+		</c:if>
+      </div>
+    </div>
+
+ </c:forEach>
+		
 	
 </div>
   

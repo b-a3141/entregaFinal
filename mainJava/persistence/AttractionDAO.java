@@ -9,4 +9,5 @@ import persistence.commons.GenericDAO;
 public interface AttractionDAO extends GenericDAO<Attraction> {
 
 	public abstract  List<Attraction> findPreferidas(User user);
+	public abstract  List<Attraction> findNotPreferidas(User user);
 }
