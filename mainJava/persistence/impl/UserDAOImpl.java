@@ -179,6 +179,7 @@ public class UserDAOImpl implements UserDAO {
 			ResultSet resultados = statement.executeQuery();
 
 			while (resultados.next()) {
+				
 				attractionList.add(resultados.getInt(2));
 			}
 
@@ -204,6 +205,7 @@ public class UserDAOImpl implements UserDAO {
 			ResultSet resultados = statement.executeQuery();
 
 			while (resultados.next()) {
+				
 				promotionList.add(resultados.getInt(2));
 			}
 
@@ -254,7 +256,7 @@ public class UserDAOImpl implements UserDAO {
 				
 				if(!promotionListRegistered.contains(i)) {
 					
-					String sql = "INSERT INTO promotionsObtained (userId,attractionsId) VALUES(?,?)";
+					String sql = "INSERT INTO promotionsObtained (userId,promotionId) VALUES(?,?)";
 					Connection conn = ConnectionProvider.getConnection();
 					PreparedStatement statement = conn.prepareStatement(sql);
 
@@ -275,7 +277,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public static void main(String[] args) {
 		UserDAO ud = DAOFactory.getUserDAO();
-		System.out.println(ud.find(3));
+		System.out.println(ud.find(4));
 		/*
 		List<Integer> a = new ArrayList<Integer>();
 		a.add(1);

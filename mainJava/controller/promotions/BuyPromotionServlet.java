@@ -1,64 +1,56 @@
 package controller.promotions;
 
 import java.io.IOException;
+import java.util.Map;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.Servlet;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import model.User;
+import persistence.commons.DAOFactory;
+import services.BuyPromotionService;
 
 /**
  * Servlet implementation class BuyPromotionServlet
  */
-@WebServlet("/BuyPromotionServlet")
+@WebServlet("/promotions/buy.do")
 public class BuyPromotionServlet extends HttpServlet implements Servlet {
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BuyPromotionServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
-	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
+	private static final long serialVersionUID = 3659549283285393970L;
+	BuyPromotionService bps;
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		bps = new BuyPromotionService();
+
 	}
 
-	/**
-	 * @see Servlet#destroy()
-	 */
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		Integer promotionId = Integer.parseInt(req.getParameter("id"));
+		User user       = (User) req.getSession().getAttribute("user");
+		Map<String, String> errors = bps.buy(user.getId(), promotionId);
+		
+		User user2 = DAOFactory.getUserDAO().find(user.getId());
+		req.getSession().setAttribute("user", user2);
+		
+		if (errors.isEmpty()) {
+			req.setAttribute("flash", "¡Gracias por comprar!");
+		} else {
+			req.setAttribute("errors", errors);
+			req.setAttribute("flash", "No ha podido realizarse la compra");
+		}
 
-	/**
-	 * @see Servlet#getServletConfig()
-	 */
-	public ServletConfig getServletConfig() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * @see Servlet#getServletInfo()
-	 */
-	public String getServletInfo() {
-		// TODO Auto-generated method stub
-		return null; 
-	}
-
-	/**
-	 * @see Servlet#service(ServletRequest request, ServletResponse response)
-	 */
-	public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		req.getRequestDispatcher("/index.jsp").forward(req, resp);
+		
+		
 	}
 
 }
