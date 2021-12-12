@@ -2,6 +2,7 @@ package services;
 
 import java.util.List;
 
+import model.User;
 import model.promotion;
 import persistence.PromotionDAO;
 import persistence.commons.DAOFactory;
@@ -69,5 +70,16 @@ public class PromotionService {
 		PromotionDAO pd = DAOFactory.getPromotionDAO();
 		return pd.find(id);
 	}
+	
+
+	public List<promotion> getPreferidas(User user) {
+		return DAOFactory.getPromotionDAO().findPreferidas(user);
+	}
+
+	
+	public List<promotion> getNotPreferidas(User user) {
+		return DAOFactory.getPromotionDAO().findNotPreferidas(user);
+	}
+	
 	
 }

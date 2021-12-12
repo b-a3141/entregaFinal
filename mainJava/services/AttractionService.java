@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import model.Attraction;
+import model.User;
 import persistence.AttractionDAO;
 import persistence.commons.DAOFactory;
 
@@ -12,6 +13,15 @@ public class AttractionService {
 		return DAOFactory.getAttractionDAO().findAll();
 	}
 
+	public List<Attraction> getPreferidas(User user) {
+		return DAOFactory.getAttractionDAO().findPreferidas(user);
+	}
+	
+	public List<Attraction> getNotPreferidas(User user) {
+		return DAOFactory.getAttractionDAO().findNotPreferidas(user);
+	}
+	
+	
 	public Attraction create(String name, Integer cost, Double duration, 
 			Integer capacity, String descripcion, String imagen,String type) {
 

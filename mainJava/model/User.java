@@ -30,13 +30,13 @@ public class User {
 	
 
 	public void addToItinerary(Attraction attraction) {
-		System.out.println(coins);
+		
 		System.out.println(attraction.getCost());
 		this.coins -= attraction.getCost();
 		
 		this.time -= attraction.getDuration();
 		attractionsOwned.add(attraction.getId());
-		System.out.println(coins);
+		
 	}
 	public void addToItinerary(promotion promotion) {
 		System.out.println("promotion id= " + promotion.getId());

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class promotion {
 	private int cost;
 	private int discount;
 	private List<Integer> attractionContained = new ArrayList<Integer>();
+	HashMap<String, String> errors ;
 
 	public promotion(int id, String name, String type, String description, String imagen, boolean capacity, int cost,
 			int discount, String typeAttraction) {
@@ -35,14 +37,36 @@ public class promotion {
 	
 	
  	public boolean isValid() {
-		boolean isValid = true;
+		validate();
 		
-		if(getCost()<0) isValid = false;
-		if(getDiscount()<0) isValid = false;
-		
-		return isValid;
+		return errors.isEmpty();
 		
 	}
+ 	
+ 	public HashMap<String, String> getErrors() {
+		return errors;
+	}
+
+
+	public void setErrors(HashMap<String, String> errors) {
+		this.errors = errors;
+	}
+
+
+	public void validate() {
+		errors = new HashMap<String, String>();
+
+		if (description.length()<1) {
+			errors.put("descripcion", "Debe poseer caracteres");
+		}
+		if (imagen.equals("")) {
+			errors.put("imagen", "Debe proporcionar imagen");
+		}
+		if (type.equals("")) {
+			errors.put("type", "Debe proporcionar type");
+		}
+	}
+ 	
 
 	public int getId() {
 		return id;

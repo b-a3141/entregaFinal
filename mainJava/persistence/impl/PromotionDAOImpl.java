@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Attraction;
+import model.User;
 import model.promotion;
 import persistence.PromotionDAO;
 import persistence.commons.ConnectionProvider;
@@ -239,16 +240,61 @@ public class PromotionDAOImpl implements PromotionDAO {
 		}
 	}
 
+
+	@Override
+	public List<promotion> findPreferidas(User user) {
 	
-	public static void main(String[] args) {
-		PromotionDAO pr = new PromotionDAOImpl();
-		
-		for(promotion i : pr.findAll()) {
-			i.ac();
+			try {
+				String sql = " SELECT  * "
+						+ " FROM promotions "
+						+ " JOIN users ON "
+						+ " users.typeAttractions = promotions.typeAttraction   "
+						+ " AND users.id  = ?"
+						+ " ORDER BY cost DESC ";
+						Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement statement = conn.prepareStatement(sql);
+				statement.setInt(1, user.getId());
+				
+				ResultSet resultados = statement.executeQuery();
+
+				List<promotion> promotionsPreferidas = new LinkedList<promotion>();
+				while (resultados.next()) {
+					promotionsPreferidas.add(toPromotion(resultados));
+				}
+
+				return promotionsPreferidas;
+			} catch (Exception e) {
+				throw new MissingDataException(e);
+			}
 		}
-		
-		
-		
+
+	
+
+	@Override
+	public List<promotion> findNotPreferidas(User user) {
+		try {
+			String sql = " SELECT  * "
+					+ " FROM promotions "
+					+ " JOIN users ON "
+					+ " users.typeAttractions != promotions.typeAttraction   "
+					+ " AND users.id  = ?"
+					+ " ORDER BY cost DESC ";
+					Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, user.getId());
+			
+			ResultSet resultados = statement.executeQuery();
+
+			List<promotion> promotionsNotPreferidas = new LinkedList<promotion>();
+			while (resultados.next()) {
+				promotionsNotPreferidas.add(toPromotion(resultados));
+			}
+
+			return promotionsNotPreferidas;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
 	}
+
 
 }

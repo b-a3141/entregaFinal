@@ -8,7 +8,7 @@
 	</div>
 	<div class="mb-1 w-25 d-inline-block">
 		<label for="cost"
-			class='col-form-label'>Costo:</label>
+			class='col-form-label  ${promotion.errors.get("cost") != null ? "is-invalid" : "" }'>Costo:</label>
 		<input class="form-control" type="number" id="cost" name="cost"
 			required value="${promotion.cost}"></input>
 		<div class="invalid-feedback">
@@ -29,7 +29,7 @@
 		<label for="descripcion"
 			class='col-form-label ${promotion.errors.get("descripcion") != null ? "is-invalid" : "" }'>Descripción:</label>
 		<input class="form-control" type="Text" id="descripcion"
-			name="descripcion" required value="${promotion.descripcion}"></input>
+			name="descripcion" required value="${promotion.description}"></input>
 		<div class="invalid-feedback">
 			<c:out value='${promotion.errors.get("Descripcion")}'></c:out>
 		</div>

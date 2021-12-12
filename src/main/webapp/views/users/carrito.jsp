@@ -28,11 +28,25 @@
 			</div>
 		</c:if>
 
+ <c:if test="${user.isAdmin()}">
+			<div class="mb-3">
+				<a href="/final1/users/create.do" class="btn btn-primary"
+					role="button"> <i class="bi bi-plus-lg"></i> Alta Usuario
+				</a>
+			</div>
+		</c:if>
+		
+	
+
+
+
 		<div class="bg-light p-4 mb-3 rounded">
 			<h1>Estas son las ofertas que usted ha adquirido</h1>
 		</div>
 
 	<div class="container py-3"  >
+	
+	
 	
 	<table class="table table-light table-striped
 	 table-hover">

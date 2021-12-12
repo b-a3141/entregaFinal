@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Attraction;
+import model.User;
 import services.AttractionService;
 
 @WebServlet("/attractions/index.do")
@@ -27,8 +28,13 @@ public class ListAttractionsServlet extends HttpServlet implements Servlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Attraction> attractions = attractionService.list();
-		req.setAttribute("attractions", attractions);
+		User user =(User) req.getSession().getAttribute("user");
+		
+		List<Attraction> attractionsPreferidas = attractionService.getPreferidas(user);
+		req.setAttribute("attractionsPreferidas", attractionsPreferidas);
+
+		List<Attraction> attractionsNotPreferidas = attractionService.getNotPreferidas(user);
+		req.setAttribute("attractionsNotPreferidas", attractionsNotPreferidas);
 
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/attractions/index.jsp");
 		dispatcher.forward(req, resp);

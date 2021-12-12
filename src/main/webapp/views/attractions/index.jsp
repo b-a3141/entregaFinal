@@ -36,7 +36,7 @@
 	
 	
 	
-	 <c:if test="${user.isAdmin()}">
+	    <c:if test="${user.isAdmin()}">
 			<div class="mb-3">
 				<a href="/final1/attractions/create.do" class="btn btn-primary"
 					role="button"> <i class="bi bi-plus-lg"></i> Nueva Atracción
@@ -44,25 +44,33 @@
 			</div>
 		</c:if>
 		
- <c:forEach items="${attractions}" var="attraction">
+		
+	
+		<div class=" col-lg-4 col-md-3 col-sm-2 bg-info p-4 mb-3 rounded">
+			<h3><c:out value="${user.getTypeAttractions().toUpperCase()}"></c:out></h3>
+			<h3>Lo que más le gusta</h3>
+		</div>
+
+
+ <c:forEach items="${attractionsPreferidas}" var="attractionsPreferidas">
 
 
 	<div class="card" style="width: 100%;">
-	  <img src="${attraction.getImagen()} " class="card-img-top" alt="imagen_atraccion">
+	  <img src="${attractionsPreferidas.getImagen()} " class="card-img-top" alt="imagen_atraccion">
 	  <div class="card-body">
-	    <h5 class="card-title"><c:out value="${attraction.name}"></c:out></h5>
-	    <p class="card-text"><c:out value="${attraction.descripcion}"></c:out></p>
+	    <h5 class="card-title"><c:out value="${attractionsPreferidas.name}"></c:out></h5>
+	    <p class="card-text"><c:out value="${attractionsPreferidas.descripcion}"></c:out></p>
 	  </div>
 	  <ul class="list-group list-group-flush">
-	    <li class="list-group-item">Valor <c:out value="${attraction.cost}"></c:out></li>
-	    <li class="list-group-item">Tiempo requerido <c:out value="${attraction.duration}"> hs.</c:out></li>
+	    <li class="list-group-item">Valor <c:out value="${attractionsPreferidas.cost}"></c:out></li>
+	    <li class="list-group-item">Tiempo requerido <c:out value="${attractionsPreferidas.duration}"> hs.</c:out></li>
 	  </ul>
 	 
 	  <div class="card-body">
 		<c:choose>
 
-			 <c:when test="${user.canAfford(attraction) && user.canAttend(attraction) && attraction.canHost(1) && user.attractionNotBuyed(attraction.id)}">
-				<a href="/final1/attractions/buy.do?id=${attraction.id}"
+			 <c:when test="${user.canAfford(attractionsPreferidas) && user.canAttend(attractionsPreferidas) && attractionsPreferidas.canHost(1)}">
+				<a href="/final1/attractions/buy.do?id=${attractionsPreferidas.id}"
 						class="btn btn-success rounded" role="button">Comprar</a>
 			</c:when>
 			<c:otherwise>
@@ -71,9 +79,9 @@
 			
 		</c:choose>
 		<c:if test="${user.admin}">
-			<a href="/final1/attractions/edit.do?id=${attraction.id}"
+			<a href="/final1/attractions/edit.do?id=${attractionsPreferidas.id}"
 			class="btn btn-light rounded-0" role="button"><i class="bi bi-pencil-fill"></i></a>
-			<a href="/final1/attractions/delete.do?id=${attraction.id}"
+			<a href="/turismo/attractions/delete.do?id=${attractionsPreferidas.id}"
 			class="btn btn-danger rounded" role="button"><i class="bi bi-x-circle-fill"></i></a>
 		</c:if>
       </div>
@@ -81,10 +89,56 @@
 
  </c:forEach>
 	
-</div>
-  
-			
+		<div class=" col-lg-4 col-md-3 col-sm-2 
+		 bg-info p-4 mt-5 mb-5 rounded">
+			<h4>Si no ha encontrado algo de su gusto principal, le sugerimos lo siguiente:</h4>
+		</div>
 
+	
+		
+ <c:forEach items="${attractionsNotPreferidas}" var="attractionsNotPreferidas">
+
+
+	<div class="card" style="width: 100%;">
+	  <img src="${attractionsNotPreferidas.getImagen()} " class="card-img-top" alt="imagen_atraccion">
+	  <div class="card-body">
+	    <h5 class="card-title"><c:out value="${attractionsNotPreferidas.name}"></c:out></h5>
+	    <p class="card-text"><c:out value="${attractionsNotPreferidas.descripcion}"></c:out></p>
+	  </div>
+	  <ul class="list-group list-group-flush">
+	    <li class="list-group-item">Valor <c:out value="${attractionsNotPreferidas.cost}"></c:out></li>
+	    <li class="list-group-item">Tiempo requerido <c:out value="${attractionsNotPreferidas.duration}"> hs.</c:out></li>
+	  </ul>
+	 
+	  <div class="card-body">
+		<c:choose>
+
+			 <c:when test="${user.canAfford(attractionsNotPreferidas) && 
+			 user.canAttend(attractionsNotPreferidas) && attractionsNotPreferidas.canHost(1)}">
+				<a href="/final1/attractions/buy.do?id=${attractionsNotPreferidas.id}"
+						class="btn btn-success rounded" role="button">Comprar</a>
+			</c:when>
+			<c:otherwise>
+			<a href="#" class="btn btn-secondary rounded disabled" role="button">No se puede comprar</a>
+			</c:otherwise>
+			
+		</c:choose>
+		<c:if test="${user.admin}">
+			<a href="/final1/attractions/edit.do?id=${attractionsNotPreferidas.id}"
+			class="btn btn-light rounded-0" role="button"><i class="bi bi-pencil-fill"></i></a>
+			<a href="/turismo/attractions/delete.do?id=${attractionsNotPreferidas.id}"
+			class="btn btn-danger rounded" role="button"><i class="bi bi-x-circle-fill"></i></a>
+		</c:if>
+      </div>
+      
+      
+    </div>
+
+ </c:forEach>
+		
+	
+		</div>
+ 
 
 	</main>
 

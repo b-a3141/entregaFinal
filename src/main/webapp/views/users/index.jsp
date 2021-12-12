@@ -28,13 +28,24 @@
 			</div>
 		</c:if>
 
+<div class="container py-3"  >
+
+	
+
 		<div class="bg-light p-4 mb-3 rounded">
-			<h1>Estas son las ofertas que usted ha adquirido</h1>
+			<h1>Estas son las ofertas que usted ha adquirido !!!</h1>
 		</div>
 
 	<div class="container py-3"  >
 	
-	
+	 <c:if test="${user.isAdmin()}">
+			<div class="mb-3">
+				<a href="/final1/users/create.do" class="btn btn-primary"
+					role="button"> <i class="bi bi-plus-lg"></i> Alta Usuario
+				</a>
+			</div>
+		</c:if>
+		
 	
  <c:forEach items="${attractionsOwned}" var="attractionsOwned">
 
@@ -49,12 +60,15 @@
 	  <ul class="list-group list-group-flush">
 	    <li class="list-group-item">Valor <c:out value="${attractionsOwned.cost}"></c:out></li>
 	    <li class="list-group-item">Tiempo requerido <c:out value="${attractionsOwned.duration}"> hs.</c:out></li>
+	    
 	  </ul>
 	 
 	  
     </div>
 
  </c:forEach>
+			
+	
 			
  <c:forEach items="${promotionsOwned}" var="promotionsOwned">
 
@@ -73,15 +87,14 @@
 	  
     </div>
 
- </c:forEach>
+  </c:forEach>
 		
 	
-</div>
+  </div>
   
-			
+  </div>			
 
-
-	</main>
+</main>
 
 </body>
 </html>

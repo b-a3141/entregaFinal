@@ -13,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Attraction;
+import model.User;
 import model.promotion;
 import services.PromotionService;
 
@@ -34,10 +36,19 @@ public class ListPromotionServlet extends HttpServlet implements Servlet {
 	
 	@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+			User user =   (User) req.getSession().getAttribute("user");
+			req.setAttribute("user", user);
+			
+			List<promotion> promotionsPreferidas = promotionservice.getPreferidas(user);
+			req.setAttribute("promotionsPreferidas", promotionsPreferidas);
+
+			List<promotion> promotionsNotPreferidas = promotionservice.getNotPreferidas(user);
+			req.setAttribute("promotionsNotPreferidas", promotionsNotPreferidas);
+
+		/*	
 			List<promotion> promotions = promotionservice.list();
 			req.setAttribute("promotions", promotions);
-			
+		*/	
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/promotions/index.jsp");
 			dispatcher.forward(req, resp);
 		}

@@ -48,7 +48,7 @@ public class CreatePromotionServlet extends HttpServlet implements Servlet {
 		String typeAttraction = req.getParameter("typeAttraction");
 		Integer cost = Integer.parseInt(req.getParameter("cost"));
 		int discount = (int) Double.parseDouble(req.getParameter("discount"));
-		
+		System.out.println("lleg");
 		String[] atraccionesEnString = req.getParameter("attractionContained").split(",");
 		
 		List<Integer> listaDeId = new ArrayList<Integer>();
@@ -60,7 +60,9 @@ public class CreatePromotionServlet extends HttpServlet implements Servlet {
 		}
 
 		promotion promotion = promotionService.create(name, type, descripcion, imagen, false, cost, discount,typeAttraction,listaDeId);
-		
+
+
+
 		
 		if (promotion.isValid()) {
 			resp.sendRedirect("/final1/promotions/index.do");

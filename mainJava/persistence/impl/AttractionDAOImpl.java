@@ -34,6 +34,62 @@ public class AttractionDAOImpl implements AttractionDAO {
 		}
 	}
 
+	public List<Attraction> findPreferidas(User user) {
+		try {
+			String sql = " SELECT  * "
+				
+					+ " FROM attractions "
+					+ " JOIN users ON "
+					+ " users.typeAttractions = attractions.type  "
+					+ " AND users.id  = ?"
+					+ " ORDER BY cost DESC ";
+					Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, user.getId());
+			
+			ResultSet resultados = statement.executeQuery();
+
+			List<Attraction> attractionsPreferidas = new LinkedList<Attraction>();
+			while (resultados.next()) {
+				attractionsPreferidas.add(toAttraction(resultados));
+			}
+
+			return attractionsPreferidas;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+	
+	@Override
+	public List<Attraction> findNotPreferidas(User user) {
+		try {
+			String sql = " SELECT  * "
+					
+					+ " FROM attractions "
+					+ " JOIN users ON "
+					+ " users.typeAttractions != attractions.type  "
+					+ " AND users.id  = ?"
+					+ " ORDER BY cost DESC ";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, user.getId());
+			
+			ResultSet resultados = statement.executeQuery();
+
+			List<Attraction> attractionsNotPreferidas = new LinkedList<Attraction>();
+			while (resultados.next()) {
+				attractionsNotPreferidas.add(toAttraction(resultados));
+			
+			}
+
+			return attractionsNotPreferidas;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+	
+	
+	
 	@Override
 	public Attraction find(Integer id) {
 		try {
@@ -145,52 +201,5 @@ public class AttractionDAOImpl implements AttractionDAO {
 		}
 	}
 
-	public List<Attraction> findPreferidas(User user) {
-		try {
-			String sql = "SELECT * FROM attractions WHERE type = ? ORDER BY cost DESC, duration ASC";
-
-			Connection conn = ConnectionProvider.getConnection();
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, user.getTypeAttractions());
-
-			ResultSet resultados = statement.executeQuery();
-
-			List<Attraction> attractionsPreferidas = new LinkedList<Attraction>();
-
-			while (resultados.next()) {
-				attractionsPreferidas.add(toAttraction(resultados));
-			}
-
-			return attractionsPreferidas;
-		} catch (Exception e) {
-			throw new MissingDataException(e);
-		}
-	}
-
-	public List<Attraction> findNoPreferidas(User user) {
-		try {
-			String sql = "SELECT * FROM attractions WHERE type != ? ORDER BY cost DESC, duration ASC";
-
-			Connection conn = ConnectionProvider.getConnection();
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, user.getTypeAttractions());
-
-			ResultSet resultados = statement.executeQuery();
-
-			List<Attraction> attractionsPreferidas = new LinkedList<Attraction>();
-
-			while (resultados.next()) {
-				attractionsPreferidas.add(toAttraction(resultados));
-			}
-
-			return attractionsPreferidas;
-		} catch (Exception e) {
-			throw new MissingDataException(e);
-		}
-	}
-
-	public static void main(String[] args) {
 	
-	}
-
 }
