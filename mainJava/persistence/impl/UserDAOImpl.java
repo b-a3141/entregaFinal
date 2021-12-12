@@ -164,7 +164,7 @@ public class UserDAOImpl implements UserDAO {
 		return User;
 
 	}
-
+/*
 	public List<Integer> attractionObtained(int id) {
 		List<Integer> attractionList;
 
@@ -216,7 +216,9 @@ public class UserDAOImpl implements UserDAO {
 			throw new MissingDataException(e);
 		}
 	}
-
+	
+	*/
+	
 	public void updateBuys(User user) {
 		List<Integer> attractionListRegistered;
 		List<Integer> promotionListRegistered;
@@ -273,8 +275,65 @@ public class UserDAOImpl implements UserDAO {
 
 			throw new MissingDataException(e);
 		}
+		
+		
 	}
 
+	
+	@Override
+	public List<Integer> attractionObtained(int userId) {
+		List<Integer> attractionList;
+
+		try {
+			attractionList = new ArrayList<Integer>();
+			String sql = "SELECT attractionsId  "
+					+ " FROM attractionsObtained "
+					+ " WHERE userId = ?";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, userId);
+
+			ResultSet resultados = statement.executeQuery();
+
+			while (resultados.next()) {
+				attractionList.add(resultados.getInt(1));
+			}
+
+			return attractionList;
+
+		} catch (Exception e) {
+
+			throw new MissingDataException(e);
+		}
+	}
+	@Override
+	public List<Integer> promotionObtained(int id) {
+		List<Integer> promotionList;
+
+		try {
+			promotionList = new ArrayList<Integer>();
+			String sql = "SELECT * FROM promotionsObtained WHERE userId = ?";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setInt(1, id);
+
+			ResultSet resultados = statement.executeQuery();
+
+			while (resultados.next()) {
+				promotionList.add(resultados.getInt(2));
+			}
+
+			return promotionList;
+
+		} catch (Exception e) {
+
+			throw new MissingDataException(e);
+		}
+	}
+
+	
+	
 	public static void main(String[] args) {
 		UserDAO ud = DAOFactory.getUserDAO();
 		System.out.println(ud.find(4));

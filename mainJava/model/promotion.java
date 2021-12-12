@@ -12,7 +12,7 @@ public class promotion {
 
 	private int id;
 	private String name;
-	private String type;
+	private String type,typeAttraction;
 	private String description;
 	private String imagen;
 	private boolean capacity;
@@ -21,7 +21,7 @@ public class promotion {
 	private List<Integer> attractionContained = new ArrayList<Integer>();
 
 	public promotion(int id, String name, String type, String description, String imagen, boolean capacity, int cost,
-			int discount) {
+			int discount, String typeAttraction) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
@@ -29,10 +29,12 @@ public class promotion {
 		this.imagen = imagen;
 		this.capacity = capacity;
 		this.cost = cost;
+		this.typeAttraction = typeAttraction;
 		this.calculateCost();
 	}
 	
-	public boolean isValid() {
+	
+ 	public boolean isValid() {
 		boolean isValid = true;
 		
 		if(getCost()<0) isValid = false;
@@ -49,6 +51,18 @@ public class promotion {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
+	
+	public String getTypeAttraction() {
+		return typeAttraction;
+	}
+
+
+	public void setTypeAttraction(String typeAttraction) {
+		this.typeAttraction = typeAttraction;
+	}
+
 
 	public String getName() {
 		return name;
@@ -83,13 +97,12 @@ public class promotion {
 	}
 
 	public boolean getCapacity() {
-		
+		hasCapacity();
 		return capacity;
 	}
 
 	public void setCapacity(boolean capacity) {
 		this.capacity = capacity;
-		hasCapacity();
 	}
 
 	public int getDiscount() {
@@ -120,11 +133,19 @@ public class promotion {
 	public boolean hasCapacity() {
 		boolean hascapacity = true;
 		
-		System.out.println(attractionContained);
+		AttractionDAO ad = DAOFactory.getAttractionDAO();
+		for(Integer i: attractionContained) {
+			Attraction attraction = ad.find(i);
+			if (attraction.getCapacity()<=0) {
+				hascapacity=false;
+			}
+		}
+		setCapacity(hascapacity);
 		return hascapacity;
 	}
 	
 	public void discountCapacity() {
+		
 		AttractionDAO ad = DAOFactory.getAttractionDAO();
 		for(int i : getAttractionContained()) {
 			Attraction attraction = ad.find(i);
@@ -142,7 +163,6 @@ public class promotion {
 
 			for (int i = 0; i < attractionContained.size() - 1; i++) {
 				Attraction a = aDAO.find(attractionContained.get(i));
-				System.out.println(a.getName());
 				cost += a.getCost();
 				this.cost = cost;
 			}
@@ -152,7 +172,6 @@ public class promotion {
 
 			for (int i = 0; i < attractionContained.size(); i++) {
 				Attraction a = aDAO.find(attractionContained.get(i));
-				System.out.println(a.getName());
 				cost += a.getCost();
 				
 			}
@@ -175,7 +194,6 @@ public class promotion {
 		
 		for(Integer i : attractionContained) {
 			Attraction a = aDAO.find(i);
-			System.out.println(a.getCost());
 		}
 	}
 	

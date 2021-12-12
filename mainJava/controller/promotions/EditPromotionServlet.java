@@ -57,11 +57,12 @@ public class EditPromotionServlet extends HttpServlet implements Servlet {
 		String type        = req.getParameter("type");
 		String descripcion = req.getParameter("descripcion");
 		String imagen      = req.getParameter("imagen");
+		String typeAttraction = req.getParameter("typeAttraction");
 		Boolean capacity   = Boolean.parseBoolean(req.getParameter("capacity"));
 		int     cost       = Integer.parseInt(req.getParameter("cost"));
 		int    discount    = Integer.parseInt(req.getParameter("discount"));
 		
-		promotion promotion = new promotion(id, name, type, descripcion, imagen, capacity, cost, discount);
+		promotion promotion = new promotion(id, name, type, descripcion, imagen, capacity, cost, discount,typeAttraction);
 		
 		promotionservice.update(id, name, type, descripcion, imagen, capacity, cost, discount);
 		

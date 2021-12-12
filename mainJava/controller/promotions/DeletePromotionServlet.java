@@ -39,7 +39,7 @@ public class DeletePromotionServlet extends HttpServlet implements Servlet {
     	promotion promotion = promotionDAO.find(id);
     	promotionDAO.delete(promotion);
     	
-    	req.getRequestDispatcher("index.jsp").forward(req, resp);
+    	req.getRequestDispatcher("/final1/index.jsp").forward(req, resp);
     	
     	
     }

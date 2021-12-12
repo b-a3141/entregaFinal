@@ -14,6 +14,7 @@
 					aria-current="page" href="/final1/attractions/index.do">Atracciones</a></li>
 				<li class="nav-item"><a class="nav-link active"
 					aria-current="page" href="/final1/promotions/index.do">Promociones</a></li>
+				<li class="nav-item"> <a class="nav-link active" aria-current="page" href="/final1/users/index.do">Sus Compras</a></li>
 			</ul>
 			
 			<ul class="navbar-nav">

@@ -34,6 +34,7 @@ public class ListPromotionServlet extends HttpServlet implements Servlet {
 	
 	@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 			List<promotion> promotions = promotionservice.list();
 			req.setAttribute("promotions", promotions);
 			

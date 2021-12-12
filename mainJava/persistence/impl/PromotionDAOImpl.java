@@ -34,6 +34,25 @@ public class PromotionDAOImpl implements PromotionDAO {
 				throw new MissingDataException(e);
 			}
 	}
+	
+	@Override
+	public promotion findByName(promotion promotion) {
+		try {
+			String sql = "SELECT * FROM PROMOTIONS WHERE name=(?)";
+			
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, promotion.getName());
+			
+			ResultSet resultados = statement.executeQuery();
+			
+			promotion promotion2 = toPromotion(resultados);
+			return promotion2;
+			
+			} catch (Exception e) {
+				throw new MissingDataException(e);
+			}
+	}
 
 	@Override
 	public List<promotion> findAll() {
@@ -76,13 +95,13 @@ public class PromotionDAOImpl implements PromotionDAO {
 	@Override
 	public int insert(promotion promotion) {
 		try {
-			String sql = "INSERT INTO promotions (name,type,descripcion,imagen,capacity,cost,discount)"
-					+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO promotions (name,type,descripcion,imagen,capacity,cost,discount,typeAttraction)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 			int i = 1;
-			
 			String capacity;
 			if(promotion.getCapacity()) { capacity = "true";} else {capacity = "false";}
 			
@@ -93,11 +112,34 @@ public class PromotionDAOImpl implements PromotionDAO {
 			statement.setString(i++, capacity);
 			   statement.setInt(i++, promotion.getCost());
 			   statement.setInt(i++, promotion.getDiscount());
+			statement.setString(i++, promotion.getTypeAttraction());
 			
-			
-			int rows = statement.executeUpdate();
+			   int rows = statement.executeUpdate();
+			   return rows;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+	
+	@Override
+	public int insertAttractionContained(int idPromotion, List<Integer> lista) {
+		int rows = 0;
+		
+		try {
+			String sql = "INSERT INTO attractionInPromotion (promotionId, attractionId) VALUES(?,?)";
+			Connection conn = ConnectionProvider.getConnection();
 
+			PreparedStatement statement = conn.prepareStatement(sql);
+			System.out.println(lista);
+			for (Integer integer : lista) {
+				statement.setInt(1, idPromotion);
+				System.out.println(integer);
+				statement.setInt(2, integer);
+				statement.executeUpdate();
+			}
+			
 			return rows;
+			
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}
@@ -165,7 +207,8 @@ public class PromotionDAOImpl implements PromotionDAO {
 				promotionRegister.getString(5),
 				capacity,
 				promotionRegister.getInt(7),
-				promotionRegister.getInt(8));
+				promotionRegister.getInt(8),
+				promotionRegister.getString(9));
 		List<Integer> attractionList = getAttractionsContained(promotionRegister.getInt(1));
 		promotion.setAttractionContained(attractionList);
 		return promotion;
