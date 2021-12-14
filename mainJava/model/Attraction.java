@@ -69,7 +69,7 @@ public class Attraction {
 			errors.put("imagen", "Debe proporcionar imagen");
 		}
 		if (type.equals("")) {
-			errors.put("type", "Debe proporcionar type");
+			errors.put("type", "Debe proporcionar type. Debe ser una sola palabra, no mayor a 15 caracteres alfabéticos.");
 		}
 	}
 	
