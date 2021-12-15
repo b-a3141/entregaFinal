@@ -30,7 +30,8 @@
 	<div class="mb-2 w-25 d-inline-block">
 		<label for="admin"
 			class='col-form-label'>Admin:</label>
-		<input class="form-control" type="text" id="admin" name="admin"
+		<input class="form-control"  placeholder = "1 / 0" type="text" 
+		id="admin" name="admin"
 			required value="${userToEdit.admin}"></input>
 		<div class="invalid-feedback">
 			<c:out value='${userToEdit.admin}'></c:out>

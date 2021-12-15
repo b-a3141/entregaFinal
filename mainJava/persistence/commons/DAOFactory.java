@@ -3,8 +3,10 @@ package persistence.commons;
 import persistence.AttractionDAO;
 import persistence.PromotionDAO;
 import persistence.UserDAO;
+import persistence.typeAttractionDAO;
 import persistence.impl.AttractionDAOImpl;
 import persistence.impl.PromotionDAOImpl;
+import persistence.impl.TypeAttractionDAOImpl;
 import persistence.impl.UserDAOImpl;
 
 public class DAOFactory {
@@ -21,4 +23,7 @@ public class DAOFactory {
 		return new PromotionDAOImpl();
 	}
 	
+	public static typeAttractionDAO getTypeAttraction() {
+		return new TypeAttractionDAOImpl();
+	}
 }

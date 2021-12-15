@@ -72,6 +72,7 @@ public class PromotionService {
 	}
 	
 
+
 	public List<promotion> getPreferidas(User user) {
 		return DAOFactory.getPromotionDAO().findPreferidas(user);
 	}

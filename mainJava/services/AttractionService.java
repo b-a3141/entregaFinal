@@ -21,16 +21,15 @@ public class AttractionService {
 		return DAOFactory.getAttractionDAO().findNotPreferidas(user);
 	}
 	
-	
 	public Attraction create(String name, Integer cost, Double duration, 
-			Integer capacity, String descripcion, String imagen,String type) {
+			Integer capacity, String descripcion, String imagen ,String type) {
 
-		Attraction attraction = new Attraction(-1, name, cost, duration, capacity, descripcion, imagen, type);
-
+		Attraction attraction = new Attraction(-1, name, cost, duration, capacity, 
+				descripcion, imagen,type);
 		if (attraction.isValid()) {
 			AttractionDAO attractionDAO = DAOFactory.getAttractionDAO();
 			attractionDAO.insert(attraction);
-
+			// XXX: si no devuelve "1", es que hubo más errores
 		}
 
 		return attraction;
@@ -58,7 +57,7 @@ public class AttractionService {
 	}
 
 	public void delete(Integer id) {
-		Attraction attraction = new Attraction(id, null, null, null, null, null, null, null);
+		Attraction attraction = new Attraction(id,null, null, null, null, null, null, null);
 
 		AttractionDAO attractionDAO = DAOFactory.getAttractionDAO();
 		attractionDAO.delete(attraction);
