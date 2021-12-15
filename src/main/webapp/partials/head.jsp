@@ -1,7 +1,7 @@
 <meta charset="UTF-8">
 <title>Sin Culpa</title>
 
-<link rel="shortcut icon" href="/final1/assets/favicon.ico">
+<link rel="shortcut icon" href="/final1/assets/img/flight.png">
 
 
 <link rel="stylesheet" href="/path/to/cdn/bootstrap.min.css" />
