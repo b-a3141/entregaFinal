@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Attraction;
+import model.User;
 import model.promotion;
 import persistence.PromotionDAO;
 import persistence.commons.ConnectionProvider;
@@ -29,6 +30,25 @@ public class PromotionDAOImpl implements PromotionDAO {
 			
 			promotion promotion = toPromotion(resultados);
 			return promotion;
+			
+			} catch (Exception e) {
+				throw new MissingDataException(e);
+			}
+	}
+	
+	@Override
+	public promotion findByName(promotion promotion) {
+		try {
+			String sql = "SELECT * FROM PROMOTIONS WHERE name=(?)";
+			
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, promotion.getName());
+			
+			ResultSet resultados = statement.executeQuery();
+			
+			promotion promotion2 = toPromotion(resultados);
+			return promotion2;
 			
 			} catch (Exception e) {
 				throw new MissingDataException(e);
@@ -76,13 +96,13 @@ public class PromotionDAOImpl implements PromotionDAO {
 	@Override
 	public int insert(promotion promotion) {
 		try {
-			String sql = "INSERT INTO promotions (name,type,descripcion,imagen,capacity,cost,discount)"
-					+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO promotions (name,type,descripcion,imagen,capacity,cost,discount,typeAttraction)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 			int i = 1;
-			
 			String capacity;
 			if(promotion.getCapacity()) { capacity = "true";} else {capacity = "false";}
 			
@@ -93,11 +113,34 @@ public class PromotionDAOImpl implements PromotionDAO {
 			statement.setString(i++, capacity);
 			   statement.setInt(i++, promotion.getCost());
 			   statement.setInt(i++, promotion.getDiscount());
+			statement.setString(i++, promotion.getTypeAttraction());
 			
-			
-			int rows = statement.executeUpdate();
+			   int rows = statement.executeUpdate();
+			   return rows;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+	
+	@Override
+	public int insertAttractionContained(int idPromotion, List<Integer> lista) {
+		int rows = 0;
+		
+		try {
+			String sql = "INSERT INTO attractionInPromotion (promotionId, attractionId) VALUES(?,?)";
+			Connection conn = ConnectionProvider.getConnection();
 
+			PreparedStatement statement = conn.prepareStatement(sql);
+			System.out.println(lista);
+			for (Integer integer : lista) {
+				statement.setInt(1, idPromotion);
+				System.out.println(integer);
+				statement.setInt(2, integer);
+				statement.executeUpdate();
+			}
+			
 			return rows;
+			
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}
@@ -165,7 +208,8 @@ public class PromotionDAOImpl implements PromotionDAO {
 				promotionRegister.getString(5),
 				capacity,
 				promotionRegister.getInt(7),
-				promotionRegister.getInt(8));
+				promotionRegister.getInt(8),
+				promotionRegister.getString(9));
 		List<Integer> attractionList = getAttractionsContained(promotionRegister.getInt(1));
 		promotion.setAttractionContained(attractionList);
 		return promotion;
@@ -185,7 +229,6 @@ public class PromotionDAOImpl implements PromotionDAO {
 			ResultSet resultados = statement.executeQuery();
 
 			while(resultados.next()) {
-				System.out.println(resultados.getInt(2));
 				attractionList.add(resultados.getInt(2));
 			}
 
@@ -197,15 +240,61 @@ public class PromotionDAOImpl implements PromotionDAO {
 		}
 	}
 
-	public static void main(String[] args) {
-		PromotionDAO pr = new PromotionDAOImpl();
-		
-		for(promotion i : pr.findAll()) {
-			i.ac();
+
+	@Override
+	public List<promotion> findPreferidas(User user) {
+	
+			try {
+				String sql = " SELECT  * "
+						+ " FROM promotions "
+						+ " JOIN users ON "
+						+ " users.typeAttractions = promotions.typeAttraction   "
+						+ " AND users.id  = ?"
+						+ " ORDER BY cost DESC ";
+						Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement statement = conn.prepareStatement(sql);
+				statement.setInt(1, user.getId());
+				
+				ResultSet resultados = statement.executeQuery();
+
+				List<promotion> promotionsPreferidas = new LinkedList<promotion>();
+				while (resultados.next()) {
+					promotionsPreferidas.add(toPromotion(resultados));
+				}
+
+				return promotionsPreferidas;
+			} catch (Exception e) {
+				throw new MissingDataException(e);
+			}
 		}
-		
-		
-		
+
+	
+
+	@Override
+	public List<promotion> findNotPreferidas(User user) {
+		try {
+			String sql = " SELECT  * "
+					+ " FROM promotions "
+					+ " JOIN users ON "
+					+ " users.typeAttractions != promotions.typeAttraction   "
+					+ " AND users.id  = ?"
+					+ " ORDER BY cost DESC ";
+					Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, user.getId());
+			
+			ResultSet resultados = statement.executeQuery();
+
+			List<promotion> promotionsNotPreferidas = new LinkedList<promotion>();
+			while (resultados.next()) {
+				promotionsNotPreferidas.add(toPromotion(resultados));
+			}
+
+			return promotionsNotPreferidas;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
 	}
+
 
 }

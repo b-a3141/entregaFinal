@@ -30,15 +30,16 @@ public class User {
 	
 
 	public void addToItinerary(Attraction attraction) {
-		System.out.println(coins);
+		
 		System.out.println(attraction.getCost());
 		this.coins -= attraction.getCost();
 		
 		this.time -= attraction.getDuration();
 		attractionsOwned.add(attraction.getId());
-		System.out.println(coins);
+		
 	}
 	public void addToItinerary(promotion promotion) {
+		System.out.println("promotion id= " + promotion.getId());
 		promotionsOwned.add(promotion.getId());
 		attractionsOwned.addAll(promotion.getAttractionContained());
 		this.coins-=promotion.getCost();
@@ -49,8 +50,7 @@ public class User {
 		return attraction.getCost() <= this.coins;
 	}
 	public boolean canAfford(promotion promotion) {
-		return true;
-		//return promotion.getCost() <= this.coins;
+		return promotion.getDuration() <= this.time;
 	}
 
 	public boolean canAttend(Attraction attraction) {
@@ -65,6 +65,18 @@ public class User {
 		return Crypt.match(password, this.passwordHash);
 	}
 
+	
+	public boolean attractionNotBuyed(int id) {
+		return !attractionsOwned.contains(id);
+		
+	}
+	
+	public boolean promotionNotBuyed(int id) {
+		return !promotionsOwned.contains(id);
+		
+	}
+	
+	
 	public Boolean getAdmin() {
 		return admin;
 	}
@@ -158,7 +170,7 @@ public class User {
 	public void addAllPromotionsOwned(List<Integer> promotionsOwned) {
 		this.promotionsOwned.addAll(promotionsOwned);
 	}
-
+	
 
 	@Override
 	public String toString() {

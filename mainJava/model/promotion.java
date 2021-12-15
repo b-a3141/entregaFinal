@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,16 +13,17 @@ public class promotion {
 
 	private int id;
 	private String name;
-	private String type;
+	private String type,typeAttraction;
 	private String description;
 	private String imagen;
 	private boolean capacity;
 	private int cost;
 	private int discount;
 	private List<Integer> attractionContained = new ArrayList<Integer>();
+	HashMap<String, String> errors ;
 
-	public promotion(int id, String name, String type, String description, String imagen,
-			boolean capacity, int cost, int discount) {
+	public promotion(int id, String name, String type, String description, String imagen, boolean capacity, int cost,
+			int discount, String typeAttraction) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
@@ -29,18 +31,42 @@ public class promotion {
 		this.imagen = imagen;
 		this.capacity = capacity;
 		this.cost = cost;
+		this.typeAttraction = typeAttraction;
 		this.calculateCost();
 	}
 	
-	public boolean isValid() {
-		boolean esvalido = true;
+	
+ 	public boolean isValid() {
+		validate();
 		
-		if(getCost()<0) esvalido=false;
-		if(getDiscount()<0) esvalido=false;
-		
-		return esvalido;
+		return errors.isEmpty();
 		
 	}
+ 	
+ 	public HashMap<String, String> getErrors() {
+		return errors;
+	}
+
+
+	public void setErrors(HashMap<String, String> errors) {
+		this.errors = errors;
+	}
+
+
+	public void validate() {
+		errors = new HashMap<String, String>();
+
+		if (description.length()<1) {
+			errors.put("descripcion", "Debe poseer caracteres");
+		}
+		if (imagen.equals("")) {
+			errors.put("imagen", "Debe proporcionar imagen");
+		}
+		if (type.equals("")) {
+			errors.put("type", "Debe proporcionar type");
+		}
+	}
+ 	
 
 	public int getId() {
 		return id;
@@ -49,6 +75,18 @@ public class promotion {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
+	
+	public String getTypeAttraction() {
+		return typeAttraction;
+	}
+
+
+	public void setTypeAttraction(String typeAttraction) {
+		this.typeAttraction = typeAttraction;
+	}
+
 
 	public String getName() {
 		return name;
@@ -83,12 +121,12 @@ public class promotion {
 	}
 
 	public boolean getCapacity() {
+		hasCapacity();
 		return capacity;
 	}
 
 	public void setCapacity(boolean capacity) {
 		this.capacity = capacity;
-		hasCapacity();
 	}
 
 	public int getDiscount() {
@@ -118,17 +156,20 @@ public class promotion {
 
 	public boolean hasCapacity() {
 		boolean hascapacity = true;
-
-		for (int i = 0; i < this.attractionContained.size(); i++) {
-			AttractionDAO ad = DAOFactory.getAttractionDAO();
-			if (ad.find(attractionContained.get(i)).getCapacity() <= 0) {
-				hascapacity = false;
+		
+		AttractionDAO ad = DAOFactory.getAttractionDAO();
+		for(Integer i: attractionContained) {
+			Attraction attraction = ad.find(i);
+			if (attraction.getCapacity()<=0) {
+				hascapacity=false;
 			}
 		}
+		setCapacity(hascapacity);
 		return hascapacity;
 	}
 	
 	public void discountCapacity() {
+		
 		AttractionDAO ad = DAOFactory.getAttractionDAO();
 		for(int i : getAttractionContained()) {
 			Attraction attraction = ad.find(i);
@@ -146,7 +187,6 @@ public class promotion {
 
 			for (int i = 0; i < attractionContained.size() - 1; i++) {
 				Attraction a = aDAO.find(attractionContained.get(i));
-				System.out.println(a.getName());
 				cost += a.getCost();
 				this.cost = cost;
 			}
@@ -156,7 +196,6 @@ public class promotion {
 
 			for (int i = 0; i < attractionContained.size(); i++) {
 				Attraction a = aDAO.find(attractionContained.get(i));
-				System.out.println(a.getName());
 				cost += a.getCost();
 				
 			}
@@ -179,7 +218,6 @@ public class promotion {
 		
 		for(Integer i : attractionContained) {
 			Attraction a = aDAO.find(i);
-			System.out.println(a.getCost());
 		}
 	}
 	

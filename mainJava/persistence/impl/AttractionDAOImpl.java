@@ -1,5 +1,6 @@
 package persistence.impl;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,73 +35,6 @@ public class AttractionDAOImpl implements AttractionDAO {
 		}
 	}
 
-	public List<Attraction> findPreferidas(User user) {
-		try {
-			String sql = " SELECT "
-					+ " attractions.id,"
-					+ " attractions.name, "
-					+ " attractions.cost, "
-					+ " attractions.duration, "
-					+ " attractions.capacity, "
-					+ " attractions.descripcion, "
-					+ " attractions.imagen "
-					+ " FROM attractions "
-					+ " JOIN users ON "
-					+ " users.typeAttractions = attractions.type  "
-					+ " AND users.id  = ?"
-					+ " ORDER BY cost DESC ";
-					Connection conn = ConnectionProvider.getConnection();
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setInt(1, user.getId());
-			
-			ResultSet resultados = statement.executeQuery();
-
-			List<Attraction> attractionsPreferidas = new LinkedList<Attraction>();
-			while (resultados.next()) {
-				attractionsPreferidas.add(toAttraction(resultados));
-			}
-
-			return attractionsPreferidas;
-		} catch (Exception e) {
-			throw new MissingDataException(e);
-		}
-	}
-	
-	@Override
-	public List<Attraction> findNotPreferidas(User user) {
-		try {
-			String sql = " SELECT "
-					+ " attractions.id,"
-					+ " attractions.name, "
-					+ " attractions.cost, "
-					+ " attractions.duration, "
-					+ " attractions.capacity, "
-					+ " attractions.descripcion, "
-					+ " attractions.imagen "
-					+ " FROM attractions "
-					+ " JOIN users ON "
-					+ " users.typeAttractions != attractions.type  "
-					+ " AND users.id  = ?"
-					+ " ORDER BY cost DESC ";
-			Connection conn = ConnectionProvider.getConnection();
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setInt(1, user.getId());
-			
-			ResultSet resultados = statement.executeQuery();
-
-			List<Attraction> attractionsNotPreferidas = new LinkedList<Attraction>();
-			while (resultados.next()) {
-				attractionsNotPreferidas.add(toAttraction(resultados));
-			
-			}
-
-			return attractionsNotPreferidas;
-		} catch (Exception e) {
-			throw new MissingDataException(e);
-		}
-	}
-	
-	
 	@Override
 	public Attraction find(Integer id) {
 		try {
@@ -108,7 +42,7 @@ public class AttractionDAOImpl implements AttractionDAO {
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, id);
-			
+
 			ResultSet resultados = statement.executeQuery();
 
 			Attraction attraction = null;
@@ -121,18 +55,18 @@ public class AttractionDAOImpl implements AttractionDAO {
 			throw new MissingDataException(e);
 		}
 	}
-	
+
 	private Attraction toAttraction(ResultSet attractionRegister) throws SQLException {
 		return new Attraction(attractionRegister.getInt(1), attractionRegister.getString(2),
-				attractionRegister.getInt(3), attractionRegister.getDouble(4), attractionRegister.getInt(5)
-				, attractionRegister.getString(6), attractionRegister.getString(7));
+				attractionRegister.getInt(3), attractionRegister.getDouble(4), attractionRegister.getInt(5),
+				attractionRegister.getString(6), attractionRegister.getString(7), attractionRegister.getString(9));
 	}
 
 	@Override
 	public int insert(Attraction attraction) {
 		try {
-			String sql = "INSERT INTO ATTRACTIONS (NAME, COST, DURATION, CAPACITY, descripcion, imagen)"
-					+ " VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO ATTRACTIONS (NAME, COST, DURATION, CAPACITY, descripcion, imagen,"
+					+ "capacity_original, type)" + " VALUES (?, ?, ?, ?, ?, ?,?,?)";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -143,8 +77,9 @@ public class AttractionDAOImpl implements AttractionDAO {
 			statement.setInt(i++, attraction.getCapacity());
 			statement.setString(i++, attraction.getDescripcion());
 			statement.setString(i++, attraction.getImagen());
-			
-			
+			statement.setInt(i++, attraction.getCapacity());
+			statement.setString(i++, attraction.getType());
+
 			int rows = statement.executeUpdate();
 
 			return rows;
@@ -169,7 +104,7 @@ public class AttractionDAOImpl implements AttractionDAO {
 			statement.setString(i++, attraction.getDescripcion());
 			statement.setString(i++, attraction.getImagen());
 			statement.setInt(i++, attraction.getId());
-			
+
 			int rows = statement.executeUpdate();
 
 			return rows;
@@ -211,9 +146,50 @@ public class AttractionDAOImpl implements AttractionDAO {
 		}
 	}
 
-	
-	public static void main(String[] args) {
-		System.out.println(DAOFactory.getAttractionDAO().findAll());
+	public List<Attraction> findPreferidas(User user) {
+		try {
+			String sql = "SELECT * FROM attractions WHERE type = ? ORDER BY cost DESC, duration ASC";
+
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, user.getTypeAttractions());
+
+			ResultSet resultados = statement.executeQuery();
+
+			List<Attraction> attractionsPreferidas = new LinkedList<Attraction>();
+
+			while (resultados.next()) {
+				attractionsPreferidas.add(toAttraction(resultados));
+			}
+
+			return attractionsPreferidas;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	@Override
+	public List<Attraction> findNotPreferidas(User user) {
+		
+			try {
+				String sql = "SELECT * FROM attractions WHERE type != ? ORDER BY cost DESC, duration ASC";
+
+				Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement statement = conn.prepareStatement(sql);
+				statement.setString(1, user.getTypeAttractions());
+
+				ResultSet resultados = statement.executeQuery();
+
+				List<Attraction> attractionsPreferidas = new LinkedList<Attraction>();
+
+				while (resultados.next()) {
+					attractionsPreferidas.add(toAttraction(resultados));
+				}
+
+				return attractionsPreferidas;
+			} catch (Exception e) {
+				throw new MissingDataException(e);
+			}
 	}
 
 	

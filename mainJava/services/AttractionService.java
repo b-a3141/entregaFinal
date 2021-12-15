@@ -22,10 +22,10 @@ public class AttractionService {
 	}
 	
 	public Attraction create(String name, Integer cost, Double duration, 
-			Integer capacity, String descripcion, String imagen) {
+			Integer capacity, String descripcion, String imagen ,String type) {
 
-		Attraction attraction = new Attraction(-1, name, cost, duration, capacity, descripcion, imagen);
-
+		Attraction attraction = new Attraction(-1, name, cost, duration, capacity, 
+				descripcion, imagen,type);
 		if (attraction.isValid()) {
 			AttractionDAO attractionDAO = DAOFactory.getAttractionDAO();
 			attractionDAO.insert(attraction);
@@ -57,7 +57,7 @@ public class AttractionService {
 	}
 
 	public void delete(Integer id) {
-		Attraction attraction = new Attraction(id, null, null, null, null, null, null);
+		Attraction attraction = new Attraction(id,null, null, null, null, null, null, null);
 
 		AttractionDAO attractionDAO = DAOFactory.getAttractionDAO();
 		attractionDAO.delete(attraction);

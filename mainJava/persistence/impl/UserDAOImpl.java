@@ -66,11 +66,11 @@ public class UserDAOImpl implements UserDAO {
 
 	public int delete(User user) {
 		try {
-			String sql = "DELETE FROM USERS WHERE USERNAME = ?";
+			String sql = "DELETE FROM USERS WHERE id = ?";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, user.getUsername());
+			statement.setInt(1, user.getId());
 			int rows = statement.executeUpdate();
 
 			return rows;
@@ -164,7 +164,7 @@ public class UserDAOImpl implements UserDAO {
 		return User;
 
 	}
-
+/*
 	public List<Integer> attractionObtained(int id) {
 		List<Integer> attractionList;
 
@@ -179,6 +179,7 @@ public class UserDAOImpl implements UserDAO {
 			ResultSet resultados = statement.executeQuery();
 
 			while (resultados.next()) {
+				
 				attractionList.add(resultados.getInt(2));
 			}
 
@@ -204,6 +205,7 @@ public class UserDAOImpl implements UserDAO {
 			ResultSet resultados = statement.executeQuery();
 
 			while (resultados.next()) {
+				
 				promotionList.add(resultados.getInt(2));
 			}
 
@@ -214,7 +216,9 @@ public class UserDAOImpl implements UserDAO {
 			throw new MissingDataException(e);
 		}
 	}
-
+	
+	*/
+	
 	public void updateBuys(User user) {
 		List<Integer> attractionListRegistered;
 		List<Integer> promotionListRegistered;
@@ -254,7 +258,7 @@ public class UserDAOImpl implements UserDAO {
 				
 				if(!promotionListRegistered.contains(i)) {
 					
-					String sql = "INSERT INTO promotionsObtained (userId,attractionsId) VALUES(?,?)";
+					String sql = "INSERT INTO promotionsObtained (userId,promotionId) VALUES(?,?)";
 					Connection conn = ConnectionProvider.getConnection();
 					PreparedStatement statement = conn.prepareStatement(sql);
 
@@ -271,11 +275,68 @@ public class UserDAOImpl implements UserDAO {
 
 			throw new MissingDataException(e);
 		}
+		
+		
 	}
 
+	
+	@Override
+	public List<Integer> attractionObtained(int userId) {
+		List<Integer> attractionList;
+
+		try {
+			attractionList = new ArrayList<Integer>();
+			String sql = "SELECT attractionsId  "
+					+ " FROM attractionsObtained "
+					+ " WHERE userId = ?";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, userId);
+
+			ResultSet resultados = statement.executeQuery();
+
+			while (resultados.next()) {
+				attractionList.add(resultados.getInt(1));
+			}
+
+			return attractionList;
+
+		} catch (Exception e) {
+
+			throw new MissingDataException(e);
+		}
+	}
+	@Override
+	public List<Integer> promotionObtained(int id) {
+		List<Integer> promotionList;
+
+		try {
+			promotionList = new ArrayList<Integer>();
+			String sql = "SELECT * FROM promotionsObtained WHERE userId = ?";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setInt(1, id);
+
+			ResultSet resultados = statement.executeQuery();
+
+			while (resultados.next()) {
+				promotionList.add(resultados.getInt(2));
+			}
+
+			return promotionList;
+
+		} catch (Exception e) {
+
+			throw new MissingDataException(e);
+		}
+	}
+
+	
+	
 	public static void main(String[] args) {
 		UserDAO ud = DAOFactory.getUserDAO();
-		System.out.println(ud.find(3));
+		System.out.println(ud.find(4));
 		/*
 		List<Integer> a = new ArrayList<Integer>();
 		a.add(1);

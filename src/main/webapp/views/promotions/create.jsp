@@ -8,6 +8,7 @@
 </head>
 <body>
 	<jsp:include page="/partials/nav.jsp"></jsp:include>
+<<<<<<< HEAD
 
 <main class="container">
 
@@ -23,6 +24,21 @@
 		
 		</form>
 	</main>
+=======
+>>>>>>> main
 
+	<main class="container">
+
+		<c:if test="${attraction != null && !attraction.isValid()}">
+			<div class="alert alert-danger">
+				<p>Se encontraron errores al crear la atracción.</p>
+			</div>
+		</c:if>
+
+		<form action="/final1/promotions/create.do" method="post">
+			<jsp:include page="/views/promotions/form.jsp"></jsp:include>
+		</form>
+	</main>
+	
 </body>
 </html>

@@ -20,7 +20,7 @@ import services.PromotionService;
 /**
  * Servlet implementation class EditPromotionServlet
  */
-@WebServlet("/EditPromotionServlet")
+@WebServlet("/promotions/edit.do")
 public class EditPromotionServlet extends HttpServlet implements Servlet {
 
 	/**
@@ -43,10 +43,13 @@ public class EditPromotionServlet extends HttpServlet implements Servlet {
 
 		promotion promotion = promotionservice.find(id);
 		req.setAttribute("promotion", promotion);
-
+		
+		
+		req.getRequestDispatcher("/views/promotions/edit.jsp").forward(req, resp);
+		/*
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/promotions/edit.jsp");
 		dispatcher.forward(req, resp);
-		
+		*/
 	}
 	
 	@Override
@@ -57,16 +60,17 @@ public class EditPromotionServlet extends HttpServlet implements Servlet {
 		String type        = req.getParameter("type");
 		String descripcion = req.getParameter("descripcion");
 		String imagen      = req.getParameter("imagen");
+		String typeAttraction = req.getParameter("typeAttraction");
 		Boolean capacity   = Boolean.parseBoolean(req.getParameter("capacity"));
 		int     cost       = Integer.parseInt(req.getParameter("cost"));
 		int    discount    = Integer.parseInt(req.getParameter("discount"));
 		
-		promotion promotion = new promotion(id, name, type, descripcion, imagen, capacity, cost, discount);
+		promotion promotion = new promotion(id, name, type, descripcion, imagen, capacity, cost, discount,typeAttraction);
 		
 		promotionservice.update(id, name, type, descripcion, imagen, capacity, cost, discount);
 		
 		if(promotion.isValid()) {
-			resp.sendRedirect("/views/promotions/index.jsp");
+			resp.sendRedirect("/final1/views/promotions/index.jsp");
 		} else {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/promotions/edit.jsp");
 			dispatcher.forward(req, resp);

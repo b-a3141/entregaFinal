@@ -6,7 +6,7 @@
 <head>
 <jsp:include page="/partials/head.jsp"></jsp:include>
 
- </head>
+</head>
 <body>
 
 	<jsp:include page="/partials/nav.jsp"></jsp:include>
@@ -36,7 +36,7 @@
 	
 	
 	
-	 <c:if test="${user.isAdmin()}">
+	    <c:if test="${user.isAdmin()}">
 			<div class="mb-3">
 				<a href="/final1/attractions/create.do" class="btn btn-primary"
 					role="button"> <i class="bi bi-plus-lg"></i> Nueva Atracción
@@ -44,8 +44,11 @@
 			</div>
 		</c:if>
 		
-		<div class="bg-light p-4 mb-3 rounded">
-			<h3>Lo que usted prefiere</h3>
+		
+	
+		<div class=" col-lg-4 col-md-3 col-sm-2 bg-info p-4 mb-3 rounded">
+			<h3><c:out value="${user.getTypeAttractions().toUpperCase()}"></c:out></h3>
+			<h3>Lo que más le gusta</h3>
 		</div>
 
 
@@ -86,8 +89,9 @@
 
  </c:forEach>
 	
-		<div class="bg-light p-4 mb-3 rounded">
-			<h3>Si no ha encontrado algo de su gusto principal, le sugerimos lo siguiente:</h3>
+		<div class=" col-lg-4 col-md-3 col-sm-2 
+		 bg-info p-4 mt-5 mb-5 rounded">
+			<h4>Si no ha encontrado algo de su gusto principal, le sugerimos lo siguiente:</h4>
 		</div>
 
 	
@@ -126,15 +130,15 @@
 			class="btn btn-danger rounded" role="button"><i class="bi bi-x-circle-fill"></i></a>
 		</c:if>
       </div>
+      
+      
     </div>
 
  </c:forEach>
 		
 	
-</div>
-  
-			
-
+		</div>
+ 
 
 	</main>
 
