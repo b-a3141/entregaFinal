@@ -10,7 +10,7 @@
 		<div class="bg-light p-4 rounded">
 		
 			<h1>
-				¡Bienvenido, <c:out value="${user.username}" />!
+				Â¡Bienvenido, <c:out value="${user.username2()}" />!
 			</h1>
 		</div>
 	</main>
