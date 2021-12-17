@@ -118,7 +118,7 @@
 		<c:if test="${user.admin}">
 			<a href="/final1/attractions/edit.do?id=${attractionsPreferidas.id}"
 			class="btn btn-light rounded-0" role="button"><i class="bi bi-pencil-fill"></i></a>
-			<a href="/turismo/attractions/delete.do?id=${attractionsPreferidas.id}"
+			<a href="/final1/attractions/delete.do?id=${attractionsPreferidas.id}"
 			class="btn btn-danger rounded" role="button"><i class="bi bi-x-circle-fill"></i></a>
 		</c:if>
       </div>
@@ -189,7 +189,7 @@
 		<c:if test="${user.admin}">
 			<a href="/final1/attractions/edit.do?id=${attractionsNotPreferidas.id}"
 			class="btn btn-light rounded-0" role="button"><i class="bi bi-pencil-fill"></i></a>
-			<a href="/turismo/attractions/delete.do?id=${attractionsNotPreferidas.id}"
+			<a href="/final1/attractions/delete.do?id=${attractionsNotPreferidas.id}"
 			class="btn btn-danger rounded" role="button"><i class="bi bi-x-circle-fill"></i></a>
 		</c:if>
       </div>
