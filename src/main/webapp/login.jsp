@@ -4,12 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="./partials/head.jsp"></jsp:include>
-
-<!-- Custom styles for this template -->
+<jsp:include page="/partials/head.jsp"></jsp:include>
 
 </head>
-<body>
+<body class = "alert alert-primary">
 
 	<div class="col-lg-8 mx-auto p-3 py-md-5">
 
@@ -18,17 +16,18 @@
 			<h1>Turismo en la Tierra Media</h1>
 		</div>
 		
-<div  class = "pb-3 mt-2 mb-2">
 
-<nav class="navbar navbar-light bg-light">
-  <div class="container">
-    <a class="navbar-brand" href="#ingresar"> Ingresar
+
+
+ <div class=" row justify-content-end">
+  <div class="col-4  ml-2 bg-light">
+   <a class=" navbar-brand" href="#ingresar"> Ingresar
       <img src="/final1/assets/img/flight.png" alt="" width="30" height="24">
     </a>
+    </div>
   </div>
-</nav>
 
-</div>
+
 
 <div  id="carouselExampleIndicators"  "
 class="carousel slide mt-3" data-bs-ride="carousel">

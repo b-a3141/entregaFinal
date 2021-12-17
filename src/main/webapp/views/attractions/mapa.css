@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+
+.map{
+	  float:left; 
+  padding:5px;  
+  background-color:#e6e6e6;
+  width:400px;
+  font-family:helvetica;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.btn-map {
+  float:right;
+  font-size:12px;
+  line-height:20px;
+  color:#DE7217;
+}
+
+#map{
+	 float:left;
+  clear:both;
+  border:2px solid #e6e6e6;
+  margin-top:2px;
+  padding:5px;
+  width:396px;
+  overflow:auto;
+  font-family:helvetica;
+  font-size:14px;
+  text-align: justify;
+	
+}
