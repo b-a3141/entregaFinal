@@ -45,6 +45,11 @@ public class User {
 		this.coins-=promotion.getCost();
 		this.time -=promotion.getDuration();
 	}
+	
+	public String username2() {
+		return username.toUpperCase().charAt(0) + username.substring(1, username.length()).toLowerCase();
+	}
+	
 
 	public boolean canAfford(Attraction attraction) {
 		return attraction.getCost() <= this.coins;
