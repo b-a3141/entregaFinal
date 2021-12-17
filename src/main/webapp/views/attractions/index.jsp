@@ -2,18 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
  <!-- maps -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="./maps.js" ></script>
     <link rel="stylesheet" href="./mapa.css" />
 
+
 <!DOCTYPE html>
 <html>
-
 <head>
-	<jsp:include page="/partials/head.jsp"></jsp:include>
+<jsp:include page="/partials/head.jsp"></jsp:include>
+
 </head>
-	
 <body>
 
 	<jsp:include page="/partials/nav.jsp"></jsp:include>

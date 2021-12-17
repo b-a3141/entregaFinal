@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="modal-body">
 
+
 	<div class="mb-1 w-50 d-inline-block">
 		<label for="name" class="col-form-label">Nombre:</label> <input
 			type="text" class="form-control" id="name" name="name" required
@@ -47,9 +48,15 @@
 
 	<div class="mb-1 w-45 d-inline-block">
 		<label for="type"
-			class='col-form-label ${promotion.errors.get("type") != null ? "is-invalid" : "" }'>Type:</label>
-		<input class="form-control" type="text" id="type" name="type" required
-			value="${promotion.type}"></input>
+			class='col-form-label ${promotion.errors.get("type") != null ? "is-invalid" : "" }'>
+			Type:</label>
+	<select class="form-control" type="select" id="type" name="type" required
+			value="${promotion.type}">
+			<option value="axb" >AXB</option>
+			<option value="absoluta">ABSOLUTA</option>
+			<option value="porcentual">PORCENTUAL</option>
+	</select>
+		
 		<div class="invalid-feedback">
 			<c:out value='${promotion.errors.get("type")}'></c:out>
 		</div>
@@ -78,4 +85,5 @@
 	<button type="submit" class="btn btn-primary">Guardar</button>
 	<a onclick="window.history.back();" class="btn btn-secondary"
 		role="button">Cancelar</a>
-</div>
+
+div>
