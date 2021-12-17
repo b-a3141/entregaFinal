@@ -34,4 +34,21 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/main/webapp/assets/img/castle.png</name>
+			<type>1</type>
+			<location>C:/Users/Berardi/versionEntrega/finalCountdown/src/main/webapp/assets/castle.png</location>
+		</link>
+		<link>
+			<name>src/main/webapp/assets/img/flight.png</name>
+			<type>1</type>
+			<location>C:/Users/Berardi/versionEntrega/finalCountdown/src/main/webapp/assets/flight.png</location>
+		</link>
+		<link>
+			<name>src/main/webapp/assets/img/travel_airplane_folder_file_10327.ico</name>
+			<type>1</type>
+			<location>C:/Users/Berardi/versionEntrega/finalCountdown/src/main/webapp/assets/travel_airplane_folder_file_10327.ico</location>
+		</link>
+	</linkedResources>
 </projectDescription>

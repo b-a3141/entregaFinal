@@ -63,9 +63,22 @@
 		</div>
 	</div>
 	
+	<div class="mb-2">
+		<label for="ubication"
+			class='col-form-label ${attraction.errors.get("ubication") != null ? "is-invalid" : "" }'>url Ubicación:</label>
+		<input class="form-control" type="text" id="ubication" name="ubication"
+			required value="${attraction.ubication}"></input>
+		<div class="invalid-feedback">
+			<c:out value='${attraction.errors.get("ubication")}'></c:out>
+		</div>
+	</div>
+	
+	
 </div>
 <div>
 	<button type="submit"  class="btn btn-primary">Guardar</button>
-	<a onclick="window.history.back();" class="btn btn-secondary"
+	
+	<!-- "window.history.back();" -->
+	<a onclick=".final1/attractions/index.jsp" class="btn btn-secondary"
 		role="button">Cancelar</a>
 </div>

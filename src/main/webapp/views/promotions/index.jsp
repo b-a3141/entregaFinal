@@ -11,7 +11,7 @@
 
 	<jsp:include page="/partials/nav.jsp"></jsp:include>
 
-	<main class="container">
+	<main class="container bg-light">
 
 		<c:if test="${flash != null}">
 			<div class="alert alert-danger">
@@ -54,8 +54,10 @@
  <c:forEach items="${promotionsPreferidas}" var="promotion">
 
 
+	<div class="mx-auto card col-4 mt-2  mb-2">
 	<div class="card" style="width: 100%;">
 	  <img src="${promotion.getImagen()} " class="card-img-top" alt="imagen_atraccion">
+	 </div>
 	  <div class="card-body">
 	    <h5 class="card-title"><c:out value="${promotion.name}"></c:out></h5>
 	    <p class="card-text"><c:out value="${promotion.description}"></c:out></p>
@@ -90,7 +92,10 @@
 
  </c:forEach>
 	
-	
+
+ 
+ 
+ 
 		<div class=" col-lg-4 col-md-3 col-sm-2  bg-info p-4 mt-5 mb-5 rounded">
 			<h4>Si no ha encontrado algo de su gusto principal, le sugerimos lo siguiente:</h4>
 		</div>
@@ -99,8 +104,10 @@
  <c:forEach items="${promotionsNotPreferidas}" var="promotion">
 
 
+	<div class="mx-auto card col-4 mt-2  mb-2">
 	<div class="card" style="width: 100%;">
 	  <img src="${promotion.getImagen()} " class="card-img-top" alt="imagen_atraccion">
+	 </div>
 	  <div class="card-body">
 	    <h5 class="card-title"><c:out value="${promotion.name}"></c:out></h5>
 	    <p class="card-text"><c:out value="${promotion.description}"></c:out></p>

@@ -13,11 +13,12 @@ public class Attraction {
 	private String descripcion;
 	private String imagen;
 	private String type;
+	private String ubication;
 	
 	private Map<String, String> errors;
 	
 	public Attraction(Integer id, String name, Integer cost, Double duration, Integer capacity,
-			String descripcion, String imagen, String type) {
+			String descripcion, String imagen, String type, String ubication) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -27,8 +28,17 @@ public class Attraction {
 		this.descripcion = descripcion;
 		this.imagen= imagen;
 		this.type = type;
+		this.ubication = ubication;
 	}
 	
+	public String getUbication() {
+		return ubication;
+	}
+
+	public void setUbication(String ubication) {
+		this.ubication = ubication;
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -70,6 +80,9 @@ public class Attraction {
 		}
 		if (type.equals("")) {
 			errors.put("type", "Debe proporcionar type. Debe ser una sola palabra, no mayor a 15 caracteres alfabéticos.");
+		}
+		if (type.equals("")) {
+			errors.put("ubication", "Debe proporcionar la url. ");
 		}
 	}
 	

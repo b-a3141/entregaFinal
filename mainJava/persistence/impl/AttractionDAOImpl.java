@@ -7,12 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-
 import model.Attraction;
 import model.User;
 import persistence.AttractionDAO;
 import persistence.commons.ConnectionProvider;
-import persistence.commons.DAOFactory;
 import persistence.commons.MissingDataException;
 
 public class AttractionDAOImpl implements AttractionDAO {
@@ -59,14 +57,15 @@ public class AttractionDAOImpl implements AttractionDAO {
 	private Attraction toAttraction(ResultSet attractionRegister) throws SQLException {
 		return new Attraction(attractionRegister.getInt(1), attractionRegister.getString(2),
 				attractionRegister.getInt(3), attractionRegister.getDouble(4), attractionRegister.getInt(5),
-				attractionRegister.getString(6), attractionRegister.getString(7), attractionRegister.getString(9));
+				attractionRegister.getString(6), attractionRegister.getString(7),
+				attractionRegister.getString(9), attractionRegister.getString(10) );
 	}
 
 	@Override
 	public int insert(Attraction attraction) {
 		try {
 			String sql = "INSERT INTO ATTRACTIONS (NAME, COST, DURATION, CAPACITY, descripcion, imagen,"
-					+ "capacity_original, type)" + " VALUES (?, ?, ?, ?, ?, ?,?,?)";
+					+ "capacity_original, type, ubicacion)" + " VALUES ( ?, ?, ?, ?, ?,?,?, ?, ?)";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -79,6 +78,7 @@ public class AttractionDAOImpl implements AttractionDAO {
 			statement.setString(i++, attraction.getImagen());
 			statement.setInt(i++, attraction.getCapacity());
 			statement.setString(i++, attraction.getType());
+			statement.setString(i++, attraction.getUbication());
 
 			int rows = statement.executeUpdate();
 

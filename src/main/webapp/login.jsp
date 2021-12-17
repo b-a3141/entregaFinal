@@ -4,17 +4,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="./partials/head.jsp"></jsp:include>
+<jsp:include page="/partials/head.jsp"></jsp:include>
+
 </head>
-<body>
+<body class = "alert alert-primary">
 
 	<div class="col-lg-8 mx-auto p-3 py-md-5">
 
 		<main>
-			<div>
-			<h1>Turismo en la Tierra Media</h1>
-			</div>
 
+<div>
+			<h1>Sin culpa</h1>
+		</div>
 				
 <div  class = "pb-3 mt-2 mb-2">
 
@@ -76,8 +77,9 @@ class="carousel slide mt-3" data-bs-ride="carousel">
 					</p>
 				</div>
 			</c:if>
-
-			<form action="login" method="post">
+	
+	<a name = "ingresar">  </a>
+			<form action="login" method="post" >
 
 				<div class="mb-3">
 					<label for="username" class="form-label">Usuario</label> <input

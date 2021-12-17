@@ -39,8 +39,10 @@ public class CreateAttractionServlet extends HttpServlet {
 		String descripcion = req.getParameter("descripcion");
 		String imagen = req.getParameter("imagen");
 		String type = req.getParameter("type");
+		String ubication = req.getParameter("ubication");
 
-		Attraction attraction = attractionService.create(name, cost, duration, capacity, descripcion, imagen,type);
+		Attraction attraction = attractionService.create(name, cost, duration, 
+				capacity, descripcion, imagen,type, ubication);
 		if (attraction.isValid()) {
 			resp.sendRedirect("/final1/attractions/index.do");
 		} else {
