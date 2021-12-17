@@ -38,6 +38,12 @@ public class User {
 		attractionsOwned.add(attraction.getId());
 		
 	}
+	
+	
+	public String username2() {
+		return username.toUpperCase().charAt(0) + username.substring(1, username.length()).toLowerCase();
+	}
+	
 	public void addToItinerary(promotion promotion) {
 		System.out.println("promotion id= " + promotion.getId());
 		promotionsOwned.add(promotion.getId());
