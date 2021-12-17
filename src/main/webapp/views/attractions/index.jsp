@@ -136,12 +136,12 @@
  <c:forEach items="${attractionsNotPreferidas}" var="attractionsNotPreferidas">
 
 
-	<div class="card" style="width: 100%;">
+	<div class="card mt-3 mb-3 rounded" style="width: 100%;">
 	  <img src="${attractionsNotPreferidas.getImagen()} " class="card-img-top" alt="imagen_atraccion">
 	  <div class="card-body">
 	    <h5 class="card-title"><c:out value="${attractionsNotPreferidas.name}"></c:out></h5>
 	    <p class="card-text"><c:out value="${attractionsNotPreferidas.descripcion}"></c:out></p>
-	  
+	  </div>
 	  <ul class="list-group list-group-flush">
 	  
 	  <div class="col-3  alert alert-primary">
