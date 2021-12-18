@@ -106,7 +106,8 @@
 	  
 		<c:choose>
 
-			 <c:when test="${user.canAfford(attractionsPreferidas) && user.canAttend(attractionsPreferidas) && attractionsPreferidas.canHost(1)}">
+			 <c:when test="${user.canAfford(attractionsPreferidas) && user.attractionNotBuyed(attractionsPreferidas.id) &&
+				       user.canAttend(attractionsPreferidas) && attractionsPreferidas.canHost(1)}">
 				<a href="/final1/attractions/buy.do?id=${attractionsPreferidas.id}"
 						class="btn btn-success rounded" role="button">Comprar</a>
 			</c:when>
